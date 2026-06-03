@@ -86,8 +86,8 @@ function HouseSVG({ className }: { className?: string }) {
       <polygon points="95,72 101,52 107,72" fill="#162A1E" />
       <polygon points="98,65 101,48 104,65" fill="#1A3525" />
       <rect x="30" y="55" width="60" height="35" rx="2" fill="#152440" />
-      <polygon points="24,57 60,32 96,57" fill="#7A4418" />
-      <line x1="60" y1="32" x2="60" y2="57" stroke="#9A5C28" strokeWidth="1" opacity="0.5" />
+      <polygon points="24,57 60,32 96,57" fill="#B08840" />
+      <line x1="60" y1="32" x2="60" y2="57" stroke="#C8A458" strokeWidth="1" opacity="0.5" />
       <rect x="52" y="68" width="16" height="22" rx="2" fill="#070E1C" />
       <circle cx="66" cy="80" r="1.5" fill="#7A4418" />
       <rect x="34" y="60" width="14" height="10" rx="1" fill="#E8D5B7" opacity="0.7" />
