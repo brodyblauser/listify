@@ -14,17 +14,17 @@
   --color-navy-900: #060D18;
   --color-navy-950: #030810;
 
-  /* Sand / tan palette */
-  --color-brown-50:  #F5EDD8;
-  --color-brown-100: #E8D5A8;
-  --color-brown-200: #D4B878;
-  --color-brown-300: #C4A05A;
-  --color-brown-400: #C8A458;
-  --color-brown-500: #B08840;
-  --color-brown-600: #8A6828;
-  --color-brown-700: #624A18;
-  --color-brown-800: #3C2C0C;
-  --color-brown-900: #1E1606;
+  /* Sand palette — true beach sand, neutral warm tan */
+  --color-brown-50:  #EDE4D0;
+  --color-brown-100: #D8C89A;
+  --color-brown-200: #C4AC72;
+  --color-brown-300: #D4BC82;
+  --color-brown-400: #C8AE6A;
+  --color-brown-500: #B89858;
+  --color-brown-600: #8C7238;
+  --color-brown-700: #624E20;
+  --color-brown-800: #3A2E10;
+  --color-brown-900: #1C1808;
 
   /* Dark surfaces — replaces cream in dark theme */
   --color-cream-50:  #0C1828;
