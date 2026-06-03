@@ -5,9 +5,22 @@ import { prisma } from "@/lib/prisma";
 import { PLANS } from "@/lib/stripe";
 import { checkRateLimit } from "@/lib/rateLimit";
 
-const client = new Anthropic();
+const isDev = !process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY === "your_anthropic_api_key_here";
+const client = isDev ? null : new Anthropic();
 
 const FREE_LIMIT = PLANS.free.limit;
+
+function mockListing(address: string, beds: string, baths: string, sqft: string, propertyType: string, highlights: string, tone: string): string {
+  const sqftText = sqft ? ` spanning ${Number(sqft).toLocaleString()} square feet` : "";
+  const toneLabel = tone === "luxury" ? "stunning" : tone === "friendly" ? "charming" : "impressive";
+  return `1. This ${toneLabel} ${propertyType.toLowerCase()}${sqftText} offers ${beds} bedrooms and ${baths} bathrooms designed for modern living. ${highlights}. Thoughtfully appointed throughout, this home delivers the perfect balance of comfort and style. Schedule your private showing today — opportunities like this don't last.
+
+2. Welcome to a beautifully appointed ${beds}-bedroom, ${baths}-bathroom ${propertyType.toLowerCase()} where every detail has been considered. ${highlights}. Natural light pours through generous windows, creating an inviting atmosphere from the moment you walk in. Don't miss your chance to make this exceptional property home.
+
+3. Discover the lifestyle you've been searching for in this exceptional ${beds}bd/${baths}ba ${propertyType.toLowerCase()}${sqftText}. ${highlights}. Whether you're entertaining guests or enjoying a quiet evening in, this home rises to every occasion. Contact us today to arrange your exclusive tour.
+
+⚠️ DEV MODE — Add your ANTHROPIC_API_KEY to .env to generate real AI listings.`;
+}
 
 function isNewMonth(resetAt: Date): boolean {
   const now = new Date();
@@ -143,14 +156,17 @@ REQUIREMENTS:
 - Do NOT include the price in the description
 - Format as: "1. [description]\\n\\n2. [description]\\n\\n3. [description]"`;
 
-  const message = await client.messages.create({
-    model: "claude-sonnet-4-6",
-    max_tokens: 1024,
-    messages: [{ role: "user", content: prompt }],
-  });
-
-  const output =
-    message.content[0].type === "text" ? message.content[0].text : "";
+  let output: string;
+  if (isDev || !client) {
+    output = mockListing(address, beds, baths, sqft, propertyType, highlights, tone);
+  } else {
+    const message = await client.messages.create({
+      model: "claude-sonnet-4-6",
+      max_tokens: 1024,
+      messages: [{ role: "user", content: prompt }],
+    });
+    output = message.content[0].type === "text" ? message.content[0].text : "";
+  }
 
   if (userId) {
     await prisma.$transaction([
