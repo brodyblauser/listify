@@ -51,23 +51,26 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${geist.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-gray-50 text-gray-900">
+      <body className="min-h-full flex flex-col bg-cream-50 text-navy-900">
         <SessionProvider>
           <Navbar />
           <main className="flex-1 pt-16">{children}</main>
-          <footer className="border-t border-gray-200 bg-white py-8 mt-auto">
+          <footer className="bg-navy-950 py-10 mt-auto">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-sm text-gray-500">
-                © {new Date().getFullYear()} Listify. Built for real estate
-                professionals.
-              </p>
-              <div className="flex gap-6 text-sm text-gray-500">
-                <a href="/pricing" className="hover:text-gray-700">
-                  Pricing
-                </a>
-                <a href="/generate" className="hover:text-gray-700">
-                  Try for Free
-                </a>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-md bg-brown-500 flex items-center justify-center">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 1L14 6V14H10V10H6V14H2V6L8 1Z" fill="white" />
+                  </svg>
+                </div>
+                <span className="text-sm text-navy-300">
+                  © {new Date().getFullYear()} Listify — Built for real estate professionals.
+                </span>
+              </div>
+              <div className="flex gap-6 text-sm text-navy-400">
+                <a href="/pricing" className="hover:text-navy-200 transition-colors">Pricing</a>
+                <a href="/generate" className="hover:text-navy-200 transition-colors">Try for Free</a>
+                <a href="/auth/signup" className="hover:text-navy-200 transition-colors">Sign Up</a>
               </div>
             </div>
           </footer>

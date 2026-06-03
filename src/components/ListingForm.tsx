@@ -48,6 +48,11 @@ const INITIAL: FormData = {
   tone: "professional",
 };
 
+const inputClass =
+  "w-full border border-navy-200 bg-white rounded-lg px-4 py-2.5 text-navy-900 placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent transition-all text-sm";
+
+const labelClass = "block text-sm font-semibold text-navy-700 mb-1";
+
 export default function ListingForm({ onResult, onLimitReached }: Props) {
   const [form, setForm] = useState<FormData>(INITIAL);
   const [loading, setLoading] = useState(false);
@@ -89,10 +94,11 @@ export default function ListingForm({ onResult, onLimitReached }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Property Address <span className="text-red-500">*</span>
+          <label className={labelClass}>
+            Property Address <span className="text-brown-500">*</span>
           </label>
           <input
             type="text"
@@ -100,43 +106,39 @@ export default function ListingForm({ onResult, onLimitReached }: Props) {
             value={form.address}
             onChange={(e) => set("address", e.target.value)}
             placeholder="123 Oak Street, Austin, TX 78701"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={inputClass}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Property Type <span className="text-red-500">*</span>
+          <label className={labelClass}>
+            Property Type <span className="text-brown-500">*</span>
           </label>
           <select
             value={form.propertyType}
             onChange={(e) => set("propertyType", e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={inputClass}
           >
             {PROPERTY_TYPES.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
+              <option key={t} value={t}>{t}</option>
             ))}
           </select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Neighborhood / Area
-          </label>
+          <label className={labelClass}>Neighborhood / Area</label>
           <input
             type="text"
             value={form.neighborhood}
             onChange={(e) => set("neighborhood", e.target.value)}
-            placeholder="South Congress, Downtown, etc."
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="South Congress, Downtown…"
+            className={inputClass}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Bedrooms <span className="text-red-500">*</span>
+          <label className={labelClass}>
+            Bedrooms <span className="text-brown-500">*</span>
           </label>
           <input
             type="number"
@@ -146,13 +148,13 @@ export default function ListingForm({ onResult, onLimitReached }: Props) {
             value={form.beds}
             onChange={(e) => set("beds", e.target.value)}
             placeholder="4"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={inputClass}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Bathrooms <span className="text-red-500">*</span>
+          <label className={labelClass}>
+            Bathrooms <span className="text-brown-500">*</span>
           </label>
           <input
             type="number"
@@ -163,59 +165,54 @@ export default function ListingForm({ onResult, onLimitReached }: Props) {
             value={form.baths}
             onChange={(e) => set("baths", e.target.value)}
             placeholder="2.5"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={inputClass}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Square Footage
-          </label>
+          <label className={labelClass}>Square Footage</label>
           <input
             type="number"
             min="0"
             value={form.sqft}
             onChange={(e) => set("sqft", e.target.value)}
-            placeholder="2400"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="2,400"
+            className={inputClass}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            List Price ($)
-          </label>
+          <label className={labelClass}>List Price ($)</label>
           <input
             type="number"
             min="0"
             value={form.price}
             onChange={(e) => set("price", e.target.value)}
-            placeholder="450000"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="450,000"
+            className={inputClass}
           />
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Key Features & Highlights <span className="text-red-500">*</span>
+          <label className={labelClass}>
+            Key Features & Highlights <span className="text-brown-500">*</span>
           </label>
           <textarea
             required
             rows={4}
             value={form.highlights}
             onChange={(e) => set("highlights", e.target.value)}
-            placeholder="Renovated kitchen with quartz countertops, hardwood floors throughout, large backyard with deck, 2-car garage, new HVAC system, walking distance to top-rated schools..."
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            placeholder="Renovated kitchen with quartz countertops, hardwood floors throughout, large backyard with deck, 2-car garage, new HVAC system, walking distance to top-rated schools…"
+            className={clsx(inputClass, "resize-none")}
           />
-          <p className="text-xs text-gray-400 mt-1">
-            The more detail you provide, the better the output. List all
-            notable features.
+          <p className="text-xs text-navy-400 mt-1.5">
+            More detail = better output. List every notable feature.
           </p>
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Tone <span className="text-red-500">*</span>
+          <label className={labelClass}>
+            Tone <span className="text-brown-500">*</span>
           </label>
           <div className="grid grid-cols-3 gap-3">
             {TONES.map((t) => (
@@ -224,16 +221,24 @@ export default function ListingForm({ onResult, onLimitReached }: Props) {
                 type="button"
                 onClick={() => set("tone", t.value)}
                 className={clsx(
-                  "border rounded-lg p-3 text-left transition-all",
+                  "border rounded-xl p-3 text-left transition-all",
                   form.tone === t.value
-                    ? "border-blue-500 bg-blue-50 ring-2 ring-blue-200"
-                    : "border-gray-200 hover:border-gray-300 bg-white"
+                    ? "border-brown-500 bg-brown-50 ring-2 ring-brown-200"
+                    : "border-navy-200 hover:border-navy-300 bg-white"
                 )}
               >
-                <div className="font-medium text-sm text-gray-900">
+                <div className={clsx(
+                  "font-semibold text-sm",
+                  form.tone === t.value ? "text-brown-700" : "text-navy-800"
+                )}>
                   {t.label}
                 </div>
-                <div className="text-xs text-gray-500 mt-0.5">{t.desc}</div>
+                <div className={clsx(
+                  "text-xs mt-0.5",
+                  form.tone === t.value ? "text-brown-500" : "text-navy-400"
+                )}>
+                  {t.desc}
+                </div>
               </button>
             ))}
           </div>
@@ -249,16 +254,16 @@ export default function ListingForm({ onResult, onLimitReached }: Props) {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+        className="w-full bg-navy-900 hover:bg-navy-800 text-white py-3.5 rounded-xl font-bold hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
       >
         {loading ? (
           <>
             <Loader2 className="w-5 h-5 animate-spin" />
-            Generating your listings...
+            Generating your listings…
           </>
         ) : (
           <>
-            <Sparkles className="w-5 h-5" />
+            <Sparkles className="w-5 h-5 text-brown-400" />
             Generate Listing Descriptions
           </>
         )}

@@ -37,31 +37,31 @@ export default function ForgotPasswordPage() {
       <div className="w-full max-w-sm">
         <div className="flex justify-center mb-8">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
-              <Home className="w-5 h-5 text-white" />
+            <div className="w-9 h-9 bg-brown-500 rounded-lg flex items-center justify-center">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L14 6V14H10V10H6V14H2V6L8 1Z" fill="white" /></svg>
             </div>
-            <span className="text-2xl font-bold text-gray-900">Listify</span>
+            <span className="text-xl font-bold text-navy-900">List<span className="text-brown-500">ify</span></span>
           </Link>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+        <div className="bg-white rounded-2xl border border-cream-200 shadow-sm p-8">
           {sent ? (
             <div className="text-center">
               <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-7 h-7 text-green-600" />
               </div>
-              <h2 className="text-xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl font-bold text-navy-900 mb-2">
                 Check your email
               </h2>
-              <p className="text-gray-500 text-sm leading-relaxed">
+              <p className="text-navy-500 text-sm leading-relaxed">
                 If an account exists for <strong>{email}</strong>, we sent a
                 password reset link. It expires in 1 hour.
               </p>
-              <p className="text-xs text-gray-400 mt-4">
+              <p className="text-xs text-navy-400 mt-4">
                 Didn&apos;t get it? Check your spam folder or{" "}
                 <button
                   onClick={() => setSent(false)}
-                  className="text-blue-600 hover:underline"
+                  className="text-brown-500 hover:underline"
                 >
                   try again
                 </button>
@@ -70,16 +70,16 @@ export default function ForgotPasswordPage() {
             </div>
           ) : (
             <>
-              <h1 className="text-2xl font-bold text-gray-900 mb-1">
+              <h1 className="text-2xl font-bold text-navy-900 mb-1">
                 Forgot your password?
               </h1>
-              <p className="text-gray-500 text-sm mb-6">
+              <p className="text-navy-500 text-sm mb-6">
                 Enter your email and we&apos;ll send a reset link.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-navy-700 mb-1">
                     Email
                   </label>
                   <input
@@ -88,7 +88,7 @@ export default function ForgotPasswordPage() {
                     autoComplete="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full border border-navy-200 rounded-lg px-4 py-2.5 text-navy-900 placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -102,7 +102,7 @@ export default function ForgotPasswordPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-60 transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-navy-900 text-white py-3 rounded-lg font-semibold hover:bg-navy-800 disabled:opacity-60 transition-colors flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>
@@ -121,7 +121,7 @@ export default function ForgotPasswordPage() {
         <div className="text-center mt-4">
           <Link
             href="/auth/login"
-            className="text-sm text-gray-500 hover:text-gray-700 flex items-center justify-center gap-1"
+            className="text-sm text-navy-500 hover:text-navy-700 flex items-center justify-center gap-1"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Back to login
