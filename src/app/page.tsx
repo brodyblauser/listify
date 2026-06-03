@@ -18,7 +18,7 @@ const ease = [0.21, 0.47, 0.32, 0.98] as const;
 
 function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: false, margin: "-80px" });
   return (
     <motion.div
       ref={ref}
@@ -34,7 +34,7 @@ function FadeUp({ children, delay = 0, className = "" }: { children: React.React
 
 function FadeIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: false, margin: "-80px" });
   return (
     <motion.div
       ref={ref}
@@ -323,7 +323,7 @@ export default function LandingPage() {
                   className={`text-center py-6 ${i > 0 ? "border-l border-white/[0.06]" : ""}`}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                 >
                   <div className="text-4xl sm:text-5xl font-extrabold" style={{ ...serif, ...sandGradient }}>{s.number}</div>
@@ -356,7 +356,7 @@ export default function LandingPage() {
                 className="flex items-start gap-8 md:gap-14"
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
+                viewport={{ once: false, margin: "-60px" }}
                 transition={{ duration: 0.7, ease, delay: i * 0.1 }}
               >
                 <div className="text-[80px] md:text-[100px] font-black leading-none select-none flex-shrink-0 w-20 md:w-28 text-right" style={{ ...serif, color: "rgba(184,152,88,0.09)" }}>
@@ -402,7 +402,7 @@ export default function LandingPage() {
                   className="flex gap-5 group"
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
+                  viewport={{ once: false, margin: "-40px" }}
                   transition={{ duration: 0.6, ease, delay: i * 0.08 }}
                 >
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 border border-white/10 transition-all group-hover:border-white/25" style={{ background: "rgba(184,152,88,0.08)" }}>
@@ -439,7 +439,7 @@ export default function LandingPage() {
                 style={{ background: "rgba(10,18,34,0.7)", backdropFilter: "blur(12px)" }}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
+                viewport={{ once: false, margin: "-40px" }}
                 transition={{ duration: 0.7, ease, delay: i * 0.12 }}
               >
                 <div style={{ ...serif, fontSize: 72, lineHeight: 0.8, marginBottom: 24, color: "#B89858", opacity: 0.45 }}>&ldquo;</div>
