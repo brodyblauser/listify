@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Trash2, Copy, Check, Sparkles, Crown } from "lucide-react";
+import { Trash2, Copy, Check, Sparkles, Crown, AlertCircle } from "lucide-react";
 import clsx from "clsx";
 
 type Listing = {
@@ -48,6 +48,8 @@ function DashboardContent() {
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [cancelLoading, setCancelLoading] = useState(false);
+  const [cancelConfirm, setCancelConfirm] = useState(false);
   const upgraded = searchParams.get("upgraded") === "true";
 
   const userPlan = (session?.user as { plan?: string })?.plan ?? "free";
@@ -71,6 +73,18 @@ function DashboardContent() {
   const handleDelete = async (id: string) => {
     await fetch(`/api/listings?id=${id}`, { method: "DELETE" });
     setListings((prev) => prev.filter((l) => l.id !== id));
+  };
+
+  const handleCancel = async () => {
+    if (!cancelConfirm) {
+      setCancelConfirm(true);
+      return;
+    }
+    setCancelLoading(true);
+    await fetch("/api/stripe/cancel", { method: "POST" });
+    setCancelLoading(false);
+    setCancelConfirm(false);
+    window.location.reload();
   };
 
   if (status === "loading" || loading) {
@@ -159,6 +173,47 @@ function DashboardContent() {
             </div>
           </div>
         </div>
+
+        {/* Cancel subscription */}
+        {(userPlan === "pro" || userPlan === "canceling") && (
+          <div className="mb-8">
+            {userPlan === "canceling" ? (
+              <div className="flex items-center gap-2 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+                <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                Your subscription is cancelled and will end at the end of your current billing period.
+              </div>
+            ) : cancelConfirm ? (
+              <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-4">
+                <p className="text-sm text-red-700 font-medium mb-3">
+                  Are you sure? You&apos;ll keep Pro access until the end of your current billing period.
+                </p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={handleCancel}
+                    disabled={cancelLoading}
+                    className="text-sm bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 disabled:opacity-60 flex items-center gap-2"
+                  >
+                    {cancelLoading && <Sparkles className="w-3.5 h-3.5 animate-spin" />}
+                    Yes, cancel my subscription
+                  </button>
+                  <button
+                    onClick={() => setCancelConfirm(false)}
+                    className="text-sm text-gray-600 hover:text-gray-800 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50"
+                  >
+                    Never mind
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                onClick={handleCancel}
+                className="text-sm text-gray-400 hover:text-red-500 transition-colors"
+              >
+                Cancel subscription
+              </button>
+            )}
+          </div>
+        )}
 
         {/* Listings */}
         <h2 className="text-lg font-semibold text-gray-900 mb-4">

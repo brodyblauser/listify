@@ -3,6 +3,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { PLANS } from "@/lib/stripe";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 const client = new Anthropic();
 
@@ -18,6 +19,39 @@ function isNewMonth(resetAt: Date): boolean {
 
 export async function POST(req: NextRequest) {
   const session = await auth();
+
+  // Rate limit: 5 req/min unauthenticated, 20 req/min authenticated
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const rateLimitKey = session?.user?.id
+    ? `user:${session.user.id}`
+    : `ip:${ip}`;
+  const limit = session?.user?.id ? 20 : 5;
+  const { allowed, remaining, resetAt } = checkRateLimit(
+    rateLimitKey,
+    limit,
+    60 * 1000
+  );
+
+  if (!allowed) {
+    const retryAfter = Math.ceil((resetAt - Date.now()) / 1000);
+    return NextResponse.json(
+      { error: "rate_limited", message: "Too many requests. Please wait a moment and try again." },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(retryAfter),
+          "X-RateLimit-Limit": String(limit),
+          "X-RateLimit-Remaining": "0",
+        },
+      }
+    );
+  }
+
+  const rateLimitHeaders = {
+    "X-RateLimit-Limit": String(limit),
+    "X-RateLimit-Remaining": String(remaining),
+  };
 
   let userId: string | null = null;
   let userPlan = "free";
@@ -142,5 +176,5 @@ REQUIREMENTS:
     ]);
   }
 
-  return NextResponse.json({ output });
+  return NextResponse.json({ output }, { headers: rateLimitHeaders });
 }
