@@ -14,17 +14,17 @@
   --color-navy-900: #060D18;
   --color-navy-950: #030810;
 
-  /* Brown — deep walnut wood, not burnt orange */
-  --color-brown-50:  #EAD9C8;
-  --color-brown-100: #D4B494;
-  --color-brown-200: #B08A60;
-  --color-brown-300: #8C6438;
-  --color-brown-400: #9A5C28;
-  --color-brown-500: #7A4418;
-  --color-brown-600: #5C3010;
-  --color-brown-700: #3E2008;
-  --color-brown-800: #281404;
-  --color-brown-900: #120A02;
+  /* Brown — espresso: very dark, rich coffee-brown */
+  --color-brown-50:  #E8D5C4;
+  --color-brown-100: #C8A882;
+  --color-brown-200: #A07848;
+  --color-brown-300: #7A5430;
+  --color-brown-400: #8C4E20;
+  --color-brown-500: #6E3815;
+  --color-brown-600: #4E2610;
+  --color-brown-700: #32160A;
+  --color-brown-800: #1E0D05;
+  --color-brown-900: #0E0602;
 
   /* Dark surfaces — replaces cream in dark theme */
   --color-cream-50:  #0C1828;
