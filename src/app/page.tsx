@@ -115,12 +115,12 @@ function ProductMockup() {
   return (
     <div className="relative">
       {/* Floating stat badge — top left */}
-      <div className="absolute -top-4 -left-4 z-20 bg-white rounded-xl shadow-xl border border-cream-200 px-4 py-2.5 flex items-center gap-2.5">
+      <div className="absolute -top-4 -left-4 z-20 bg-navy-800 rounded-xl shadow-xl border border-navy-700 px-4 py-2.5 flex items-center gap-2.5">
         <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
           <Clock className="w-4 h-4 text-green-600" />
         </div>
         <div>
-          <div className="text-xs font-bold text-navy-900">Saved 47 min</div>
+          <div className="text-xs font-bold text-white">Saved 47 min</div>
           <div className="text-xs text-navy-400">vs. writing manually</div>
         </div>
       </div>
@@ -132,7 +132,7 @@ function ProductMockup() {
       </div>
 
       {/* Main mockup window */}
-      <div className="relative bg-white rounded-2xl shadow-2xl shadow-navy-950/40 border border-cream-200 overflow-hidden">
+      <div className="relative bg-navy-800 rounded-2xl shadow-2xl shadow-navy-950/40 border border-navy-700 overflow-hidden">
         {/* Window chrome */}
         <div className="bg-navy-900 px-4 py-3 flex items-center gap-2">
           <div className="flex gap-1.5">
@@ -146,22 +146,22 @@ function ProductMockup() {
         </div>
 
         {/* Property header */}
-        <div className="bg-cream-50 border-b border-cream-200 px-5 py-4">
+        <div className="bg-navy-900 border-b border-navy-700 px-5 py-4">
           <div className="flex items-start gap-4">
-            <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border border-cream-200">
+            <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border border-navy-700">
               <HouseSVG className="w-full h-full" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="font-bold text-navy-900 text-sm leading-tight">2847 Willow Creek Dr</div>
+              <div className="font-bold text-white text-sm leading-tight">2847 Willow Creek Dr</div>
               <div className="text-navy-400 text-xs mt-0.5 mb-2">Austin, TX 78704</div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="inline-flex items-center gap-1 bg-navy-100 text-navy-700 text-xs px-2 py-0.5 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-navy-600 text-navy-100 text-xs px-2 py-0.5 rounded-full font-medium">
                   <Bed className="w-3 h-3" /> 4 bd
                 </span>
-                <span className="inline-flex items-center gap-1 bg-navy-100 text-navy-700 text-xs px-2 py-0.5 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-navy-600 text-navy-100 text-xs px-2 py-0.5 rounded-full font-medium">
                   <Bath className="w-3 h-3" /> 3 ba
                 </span>
-                <span className="inline-flex items-center gap-1 bg-navy-100 text-navy-700 text-xs px-2 py-0.5 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-navy-600 text-navy-100 text-xs px-2 py-0.5 rounded-full font-medium">
                   <Maximize2 className="w-3 h-3" /> 2,840 sqft
                 </span>
                 <span className="inline-flex items-center gap-1 bg-brown-100 text-brown-700 text-xs px-2 py-0.5 rounded-full font-medium capitalize">
@@ -179,13 +179,13 @@ function ProductMockup() {
               <div className="w-5 h-5 bg-brown-500 rounded-md flex items-center justify-center">
                 <Sparkles className="w-3 h-3 text-white" />
               </div>
-              <span className="text-xs font-bold text-navy-900 uppercase tracking-wide">Generated Listing</span>
+              <span className="text-xs font-bold text-white uppercase tracking-wide">Generated Listing</span>
             </div>
             <div className="flex gap-1">
               {[1, 2, 3].map((n) => (
                 <button
                   key={n}
-                  className={`text-xs px-2 py-0.5 rounded font-medium ${n === 1 ? "bg-navy-900 text-white" : "text-navy-400 hover:text-navy-700"}`}
+                  className={`text-xs px-2 py-0.5 rounded font-medium ${n === 1 ? "bg-navy-900 text-white" : "text-navy-400 hover:text-navy-100"}`}
                 >
                   {n}
                 </button>
@@ -193,7 +193,7 @@ function ProductMockup() {
             </div>
           </div>
 
-          <p className="text-navy-700 text-xs leading-relaxed line-clamp-5">
+          <p className="text-navy-100 text-xs leading-relaxed line-clamp-5">
             Welcome to this stunning craftsman retreat tucked into one of South Austin&apos;s most coveted neighborhoods.
             Soaring 10-foot ceilings and wide-plank white oak floors set the tone from the moment you enter. The
             chef&apos;s kitchen features quartz countertops, a 36&quot; gas range, and a breakfast bar that opens
@@ -213,7 +213,7 @@ function ProductMockup() {
         </div>
 
         {/* Animated typing indicator at bottom */}
-        <div className="border-t border-cream-100 bg-cream-50 px-5 py-2.5 flex items-center gap-2">
+        <div className="border-t border-navy-700 bg-navy-900 px-5 py-2.5 flex items-center gap-2">
           <div className="flex gap-1">
             <span className="w-1.5 h-1.5 bg-brown-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
             <span className="w-1.5 h-1.5 bg-brown-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
@@ -237,7 +237,7 @@ function ProductMockup() {
 
 export default function LandingPage() {
   return (
-    <div className="bg-cream-50">
+    <div className="bg-navy-900">
 
       {/* ── Hero ── */}
       <section className="relative bg-navy-900 overflow-hidden">
@@ -358,8 +358,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Trust bar ── */}
-      <section className="border-y border-cream-200 bg-white py-5">
-        <div className="max-w-4xl mx-auto px-4 flex flex-wrap items-center justify-center gap-6 text-sm text-navy-600 font-medium">
+      <section className="border-y border-navy-700 bg-navy-800 py-5">
+        <div className="max-w-4xl mx-auto px-4 flex flex-wrap items-center justify-center gap-6 text-sm text-navy-200 font-medium">
           {[
             "No credit card required",
             "All property types supported",
@@ -380,7 +380,7 @@ export default function LandingPage() {
           <p className="text-brown-500 text-sm font-bold uppercase tracking-widest mb-3">
             How It Works
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-navy-900">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">
             Three steps from details to done
           </h2>
         </div>
@@ -395,8 +395,8 @@ export default function LandingPage() {
                 <div className="w-16 h-16 bg-navy-900 text-brown-400 rounded-2xl flex items-center justify-center text-xl font-black mx-auto mb-5 shadow-lg">
                   {item.step}
                 </div>
-                <h3 className="font-bold text-navy-900 text-lg mb-2">{item.title}</h3>
-                <p className="text-navy-500 text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="font-bold text-white text-lg mb-2">{item.title}</h3>
+                <p className="text-navy-300 text-sm leading-relaxed">{item.desc}</p>
               </div>
             </div>
           ))}
@@ -441,7 +441,7 @@ export default function LandingPage() {
           <p className="text-brown-500 text-sm font-bold uppercase tracking-widest mb-3">
             Testimonials
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-navy-900">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">
             Agents Love It
           </h2>
         </div>
@@ -450,18 +450,18 @@ export default function LandingPage() {
           {TESTIMONIALS.map((t) => (
             <div
               key={t.name}
-              className="bg-white rounded-2xl p-6 border border-cream-200 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-navy-800 rounded-2xl p-6 border border-navy-700 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="flex gap-0.5 mb-4">
                 {Array.from({ length: t.rating }).map((_, i) => (
                   <Star key={i} className="w-4 h-4 text-brown-400 fill-brown-400" />
                 ))}
               </div>
-              <p className="text-navy-700 text-sm leading-relaxed mb-5">
+              <p className="text-navy-100 text-sm leading-relaxed mb-5">
                 &ldquo;{t.quote}&rdquo;
               </p>
-              <div className="border-t border-cream-200 pt-4">
-                <div className="font-semibold text-navy-900 text-sm">{t.name}</div>
+              <div className="border-t border-navy-700 pt-4">
+                <div className="font-semibold text-white text-sm">{t.name}</div>
                 <div className="text-navy-400 text-xs mt-0.5">{t.title}</div>
               </div>
             </div>

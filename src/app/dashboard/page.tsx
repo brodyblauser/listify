@@ -32,7 +32,7 @@ function CopyButton({ text }: { text: string }) {
         "flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg transition-all",
         copied
           ? "bg-green-100 text-green-700"
-          : "bg-gray-100 text-navy-600 hover:bg-gray-200"
+          : "bg-navy-700 text-navy-200 hover:bg-navy-600"
       )}
     >
       {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
@@ -112,8 +112,8 @@ function DashboardContent() {
 
         <div className="flex items-start justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-navy-900">Dashboard</h1>
-            <p className="text-navy-500 text-sm mt-1">
+            <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+            <p className="text-navy-300 text-sm mt-1">
               {session?.user?.name ?? session?.user?.email}
             </p>
           </div>
@@ -128,28 +128,28 @@ function DashboardContent() {
 
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10">
-          <div className="bg-white rounded-xl border border-cream-200 p-5 shadow-sm">
-            <div className="text-2xl font-bold text-navy-900">
+          <div className="bg-navy-800 rounded-xl border border-navy-700 p-5 shadow-sm">
+            <div className="text-2xl font-bold text-white">
               {listings.length}
             </div>
-            <div className="text-sm text-navy-500 mt-0.5">Total Listings</div>
+            <div className="text-sm text-navy-300 mt-0.5">Total Listings</div>
           </div>
-          <div className="bg-white rounded-xl border border-cream-200 p-5 shadow-sm">
-            <div className="text-2xl font-bold text-navy-900">{usageCount}</div>
-            <div className="text-sm text-navy-500 mt-0.5">Generations Used</div>
+          <div className="bg-navy-800 rounded-xl border border-navy-700 p-5 shadow-sm">
+            <div className="text-2xl font-bold text-white">{usageCount}</div>
+            <div className="text-sm text-navy-300 mt-0.5">Generations Used</div>
           </div>
           <div
             className={clsx(
               "rounded-xl border p-5 shadow-sm col-span-2 sm:col-span-1",
               userPlan === "pro"
                 ? "bg-navy-900 border-navy-800"
-                : "bg-white border-cream-200"
+                : "bg-navy-800 border-navy-700"
             )}
           >
             <div
               className={clsx(
                 "text-2xl font-bold capitalize",
-                userPlan === "pro" ? "text-white" : "text-navy-900"
+                userPlan === "pro" ? "text-white" : "text-white"
               )}
             >
               {userPlan}
@@ -157,7 +157,7 @@ function DashboardContent() {
             <div
               className={clsx(
                 "text-sm mt-0.5",
-                userPlan === "pro" ? "text-navy-300" : "text-navy-500"
+                userPlan === "pro" ? "text-navy-300" : "text-navy-300"
               )}
             >
               {userPlan === "pro" ? (
@@ -198,7 +198,7 @@ function DashboardContent() {
                   </button>
                   <button
                     onClick={() => setCancelConfirm(false)}
-                    className="text-sm text-navy-600 hover:text-gray-800 px-4 py-2 rounded-lg border border-cream-200 hover:bg-cream-50"
+                    className="text-sm text-navy-200 hover:text-gray-800 px-4 py-2 rounded-lg border border-navy-700 hover:bg-navy-900"
                   >
                     Never mind
                   </button>
@@ -216,14 +216,14 @@ function DashboardContent() {
         )}
 
         {/* Listings */}
-        <h2 className="text-lg font-semibold text-navy-900 mb-4">
+        <h2 className="text-lg font-semibold text-white mb-4">
           Saved Listings
         </h2>
 
         {listings.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-2xl border border-cream-200">
+          <div className="text-center py-16 bg-navy-800 rounded-2xl border border-navy-700">
             <Sparkles className="w-10 h-10 text-navy-300 mx-auto mb-3" />
-            <p className="text-navy-500 mb-4">No listings yet.</p>
+            <p className="text-navy-300 mb-4">No listings yet.</p>
             <Link
               href="/generate"
               className="bg-navy-900 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-sm"
@@ -236,16 +236,16 @@ function DashboardContent() {
             {listings.map((listing) => (
               <div
                 key={listing.id}
-                className="bg-white rounded-xl border border-cream-200 shadow-sm overflow-hidden"
+                className="bg-navy-800 rounded-xl border border-navy-700 shadow-sm overflow-hidden"
               >
                 <div
-                  className="flex items-center justify-between px-5 py-4 cursor-pointer hover:bg-cream-50 transition-colors"
+                  className="flex items-center justify-between px-5 py-4 cursor-pointer hover:bg-navy-900 transition-colors"
                   onClick={() =>
                     setExpanded(expanded === listing.id ? null : listing.id)
                   }
                 >
                   <div className="min-w-0">
-                    <div className="font-semibold text-navy-900 text-sm truncate">
+                    <div className="font-semibold text-white text-sm truncate">
                       {listing.address}
                     </div>
                     <div className="text-xs text-navy-400 mt-0.5">
@@ -273,8 +273,8 @@ function DashboardContent() {
                 </div>
 
                 {expanded === listing.id && (
-                  <div className="border-t border-cream-200 px-5 py-4 bg-cream-50">
-                    <pre className="whitespace-pre-wrap text-sm text-navy-700 font-sans leading-relaxed">
+                  <div className="border-t border-navy-700 px-5 py-4 bg-navy-900">
+                    <pre className="whitespace-pre-wrap text-sm text-navy-100 font-sans leading-relaxed">
                       {listing.output}
                     </pre>
                   </div>

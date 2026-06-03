@@ -40,7 +40,7 @@ function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-navy-700 mb-1">
+        <label className="block text-sm font-medium text-navy-100 mb-1">
           Email
         </label>
         <input
@@ -49,14 +49,14 @@ function LoginForm() {
           autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full border border-navy-200 rounded-lg px-4 py-2.5 text-navy-900 placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent"
+          className="w-full border border-navy-200 rounded-lg px-4 py-2.5 text-white placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent"
           placeholder="you@example.com"
         />
       </div>
 
       <div>
         <div className="flex items-center justify-between mb-1">
-          <label className="block text-sm font-medium text-navy-700">
+          <label className="block text-sm font-medium text-navy-100">
             Password
           </label>
           <Link
@@ -72,7 +72,7 @@ function LoginForm() {
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full border border-navy-200 rounded-lg px-4 py-2.5 text-navy-900 placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent"
+          className="w-full border border-navy-200 rounded-lg px-4 py-2.5 text-white placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent"
           placeholder="••••••••"
         />
       </div>
@@ -110,22 +110,22 @@ export default function LoginPage() {
             <div className="w-9 h-9 bg-brown-500 rounded-lg flex items-center justify-center">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L14 6V14H10V10H6V14H2V6L8 1Z" fill="white" /></svg>
             </div>
-            <span className="text-xl font-bold text-navy-900">List<span className="text-brown-500">ify</span></span>
+            <span className="text-xl font-bold text-white">List<span className="text-brown-500">ify</span></span>
           </Link>
         </div>
 
-        <div className="bg-white rounded-2xl border border-cream-200 shadow-sm p-8">
-          <h1 className="text-2xl font-bold text-navy-900 mb-1">
+        <div className="bg-navy-800 rounded-2xl border border-navy-700 shadow-sm p-8">
+          <h1 className="text-2xl font-bold text-white mb-1">
             Welcome back
           </h1>
-          <p className="text-navy-500 text-sm mb-6">Sign in to your account</p>
+          <p className="text-navy-300 text-sm mb-6">Sign in to your account</p>
 
-          <Suspense fallback={<div className="h-40 animate-pulse bg-gray-100 rounded-lg" />}>
+          <Suspense fallback={<div className="h-40 animate-pulse bg-navy-700 rounded-lg" />}>
             <LoginForm />
           </Suspense>
         </div>
 
-        <p className="text-center text-sm text-navy-500 mt-4">
+        <p className="text-center text-sm text-navy-300 mt-4">
           Don&apos;t have an account?{" "}
           <Link
             href="/auth/signup"

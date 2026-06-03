@@ -53,14 +53,14 @@ function StatCard({
     <div
       className={clsx(
         "rounded-xl border p-6 shadow-sm",
-        accent ? "bg-navy-900 border-navy-800" : "bg-white border-cream-200"
+        accent ? "bg-navy-900 border-navy-800" : "bg-navy-800 border-navy-700"
       )}
     >
       <div className="flex items-center justify-between mb-3">
         <span
           className={clsx(
             "text-sm font-medium",
-            accent ? "text-navy-300" : "text-navy-500"
+            accent ? "text-navy-300" : "text-navy-300"
           )}
         >
           {label}
@@ -72,7 +72,7 @@ function StatCard({
       <div
         className={clsx(
           "text-3xl font-bold",
-          accent ? "text-white" : "text-navy-900"
+          accent ? "text-white" : "text-white"
         )}
       >
         {value}
@@ -123,7 +123,7 @@ export default function AdminPage() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
-          <p className="text-navy-500 text-lg">{error}</p>
+          <p className="text-navy-300 text-lg">{error}</p>
         </div>
       </div>
     );
@@ -137,8 +137,8 @@ export default function AdminPage() {
     <div className="py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-navy-900">Admin Dashboard</h1>
-          <p className="text-navy-500 text-sm mt-1">
+          <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
+          <p className="text-navy-300 text-sm mt-1">
             Business overview — {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}
           </p>
         </div>
@@ -174,32 +174,32 @@ export default function AdminPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Recent Users */}
           <div className="lg:col-span-2">
-            <h2 className="text-base font-semibold text-navy-900 mb-4">
+            <h2 className="text-base font-semibold text-white mb-4">
               Recent Signups
             </h2>
-            <div className="bg-white rounded-xl border border-cream-200 shadow-sm overflow-hidden">
+            <div className="bg-navy-800 rounded-xl border border-navy-700 shadow-sm overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-cream-200 bg-cream-50">
-                    <th className="text-left px-4 py-3 text-navy-500 font-medium">
+                  <tr className="border-b border-navy-700 bg-navy-900">
+                    <th className="text-left px-4 py-3 text-navy-300 font-medium">
                       User
                     </th>
-                    <th className="text-left px-4 py-3 text-navy-500 font-medium">
+                    <th className="text-left px-4 py-3 text-navy-300 font-medium">
                       Plan
                     </th>
-                    <th className="text-right px-4 py-3 text-navy-500 font-medium">
+                    <th className="text-right px-4 py-3 text-navy-300 font-medium">
                       Listings
                     </th>
-                    <th className="text-right px-4 py-3 text-navy-500 font-medium">
+                    <th className="text-right px-4 py-3 text-navy-300 font-medium">
                       Joined
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-cream-100">
+                <tbody className="divide-y divide-navy-700">
                   {recentUsers.map((user) => (
-                    <tr key={user.id} className="hover:bg-cream-50 transition-colors">
+                    <tr key={user.id} className="hover:bg-navy-900 transition-colors">
                       <td className="px-4 py-3">
-                        <div className="font-medium text-navy-900 truncate max-w-[160px]">
+                        <div className="font-medium text-white truncate max-w-[160px]">
                           {user.name ?? "—"}
                         </div>
                         <div className="text-navy-400 text-xs truncate max-w-[160px]">
@@ -212,13 +212,13 @@ export default function AdminPage() {
                             "inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium capitalize",
                             user.plan === "pro"
                               ? "bg-navy-100 text-brown-600"
-                              : "bg-gray-100 text-navy-600"
+                              : "bg-navy-700 text-navy-200"
                           )}
                         >
                           {user.plan}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-right text-navy-600">
+                      <td className="px-4 py-3 text-right text-navy-200">
                         {user._count.listings}
                       </td>
                       <td className="px-4 py-3 text-right text-navy-400 text-xs">
@@ -243,17 +243,17 @@ export default function AdminPage() {
 
           {/* Top Power Users */}
           <div>
-            <h2 className="text-base font-semibold text-navy-900 mb-4">
+            <h2 className="text-base font-semibold text-white mb-4">
               Most Active Users
             </h2>
-            <div className="bg-white rounded-xl border border-cream-200 shadow-sm divide-y divide-cream-100">
+            <div className="bg-navy-800 rounded-xl border border-navy-700 shadow-sm divide-y divide-navy-700">
               {topUsers.map((user, i) => (
                 <div key={user.id} className="px-4 py-3 flex items-center gap-3">
                   <div className="w-7 h-7 rounded-full bg-navy-100 text-brown-600 flex items-center justify-center text-xs font-bold flex-shrink-0">
                     {i + 1}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="font-medium text-navy-900 text-sm truncate">
+                    <div className="font-medium text-white text-sm truncate">
                       {user.name ?? user.email}
                     </div>
                     <div className="text-xs text-navy-400 truncate">
@@ -265,7 +265,7 @@ export default function AdminPage() {
                       "text-xs font-medium px-2 py-0.5 rounded-full capitalize flex-shrink-0",
                       user.plan === "pro"
                         ? "bg-navy-100 text-brown-600"
-                        : "bg-gray-100 text-navy-500"
+                        : "bg-navy-700 text-navy-300"
                     )}
                   >
                     {user.plan}

@@ -1,44 +1,44 @@
 @import "tailwindcss";
 
 @theme {
-  /* Navy palette */
-  --color-navy-50:  #EEF2F9;
-  --color-navy-100: #D5DFF0;
-  --color-navy-200: #ABBFE1;
-  --color-navy-300: #7A9ACE;
-  --color-navy-400: #4F78BB;
-  --color-navy-500: #2B58A3;
-  --color-navy-600: #1D4282;
-  --color-navy-700: #153166;
-  --color-navy-800: #0E2049;
-  --color-navy-900: #081430;
-  --color-navy-950: #040B1E;
+  /* Navy — deep midnight, no royal blue */
+  --color-navy-50:  #D8E2F0;
+  --color-navy-100: #B0C4DC;
+  --color-navy-200: #7A9AB8;
+  --color-navy-300: #4E7090;
+  --color-navy-400: #324E6A;
+  --color-navy-500: #1E3450;
+  --color-navy-600: #14253C;
+  --color-navy-700: #0E1C2E;
+  --color-navy-800: #0A1422;
+  --color-navy-900: #060D18;
+  --color-navy-950: #030810;
 
-  /* Brown / copper palette */
-  --color-brown-50:  #FAF3EC;
-  --color-brown-100: #F2E0CB;
-  --color-brown-200: #E3BC97;
-  --color-brown-300: #D09A65;
-  --color-brown-400: #BA7A3E;
-  --color-brown-500: #9E622A;
-  --color-brown-600: #7E4C1F;
-  --color-brown-700: #5E3815;
-  --color-brown-800: #3F250D;
-  --color-brown-900: #201207;
+  /* Brown — deep walnut wood, not burnt orange */
+  --color-brown-50:  #EAD9C8;
+  --color-brown-100: #D4B494;
+  --color-brown-200: #B08A60;
+  --color-brown-300: #8C6438;
+  --color-brown-400: #9A5C28;
+  --color-brown-500: #7A4418;
+  --color-brown-600: #5C3010;
+  --color-brown-700: #3E2008;
+  --color-brown-800: #281404;
+  --color-brown-900: #120A02;
 
-  /* Cream / warm neutral */
-  --color-cream-50:  #FDFAF6;
-  --color-cream-100: #F8F2E8;
-  --color-cream-200: #EFE2CC;
-  --color-cream-300: #E3CDA9;
+  /* Dark surfaces — replaces cream in dark theme */
+  --color-cream-50:  #0C1828;
+  --color-cream-100: #091220;
+  --color-cream-200: #142035;
+  --color-cream-300: #1E2E45;
 
   /* Font */
   --font-sans: var(--font-geist);
 }
 
 :root {
-  --background: #FDFAF6;
-  --foreground: #0E2049;
+  --background: #060D18;
+  --foreground: #D8E2F0;
 }
 
 body {
@@ -49,17 +49,28 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Form inputs inherit dark theme */
+input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+textarea,
+select {
+  background-color: var(--color-navy-700);
+  color: var(--color-navy-50);
+}
+
+input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]):not([type="range"])::placeholder,
+textarea::placeholder {
+  color: var(--color-navy-400);
+}
+
 * {
   box-sizing: border-box;
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Selection color */
 ::selection {
-  background: #D5DFF0;
-  color: #0E2049;
+  background: #1E3450;
+  color: #D8E2F0;
 }

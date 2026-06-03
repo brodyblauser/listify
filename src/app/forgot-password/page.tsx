@@ -40,20 +40,20 @@ export default function ForgotPasswordPage() {
             <div className="w-9 h-9 bg-brown-500 rounded-lg flex items-center justify-center">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L14 6V14H10V10H6V14H2V6L8 1Z" fill="white" /></svg>
             </div>
-            <span className="text-xl font-bold text-navy-900">List<span className="text-brown-500">ify</span></span>
+            <span className="text-xl font-bold text-white">List<span className="text-brown-500">ify</span></span>
           </Link>
         </div>
 
-        <div className="bg-white rounded-2xl border border-cream-200 shadow-sm p-8">
+        <div className="bg-navy-800 rounded-2xl border border-navy-700 shadow-sm p-8">
           {sent ? (
             <div className="text-center">
               <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-7 h-7 text-green-600" />
               </div>
-              <h2 className="text-xl font-bold text-navy-900 mb-2">
+              <h2 className="text-xl font-bold text-white mb-2">
                 Check your email
               </h2>
-              <p className="text-navy-500 text-sm leading-relaxed">
+              <p className="text-navy-300 text-sm leading-relaxed">
                 If an account exists for <strong>{email}</strong>, we sent a
                 password reset link. It expires in 1 hour.
               </p>
@@ -70,16 +70,16 @@ export default function ForgotPasswordPage() {
             </div>
           ) : (
             <>
-              <h1 className="text-2xl font-bold text-navy-900 mb-1">
+              <h1 className="text-2xl font-bold text-white mb-1">
                 Forgot your password?
               </h1>
-              <p className="text-navy-500 text-sm mb-6">
+              <p className="text-navy-300 text-sm mb-6">
                 Enter your email and we&apos;ll send a reset link.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-navy-700 mb-1">
+                  <label className="block text-sm font-medium text-navy-100 mb-1">
                     Email
                   </label>
                   <input
@@ -88,7 +88,7 @@ export default function ForgotPasswordPage() {
                     autoComplete="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full border border-navy-200 rounded-lg px-4 py-2.5 text-navy-900 placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent"
+                    className="w-full border border-navy-200 rounded-lg px-4 py-2.5 text-white placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -121,7 +121,7 @@ export default function ForgotPasswordPage() {
         <div className="text-center mt-4">
           <Link
             href="/auth/login"
-            className="text-sm text-navy-500 hover:text-navy-700 flex items-center justify-center gap-1"
+            className="text-sm text-navy-300 hover:text-navy-100 flex items-center justify-center gap-1"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Back to login

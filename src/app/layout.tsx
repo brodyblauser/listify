@@ -51,7 +51,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${geist.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-cream-50 text-navy-900">
+      <body className="min-h-full flex flex-col bg-navy-900 text-white">
         <SessionProvider>
           <Navbar />
           <main className="flex-1 pt-16">{children}</main>

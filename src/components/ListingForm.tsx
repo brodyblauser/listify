@@ -49,9 +49,9 @@ const INITIAL: FormData = {
 };
 
 const inputClass =
-  "w-full border border-navy-200 bg-white rounded-lg px-4 py-2.5 text-navy-900 placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent transition-all text-sm";
+  "w-full border border-navy-200 bg-navy-800 rounded-lg px-4 py-2.5 text-white placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent transition-all text-sm";
 
-const labelClass = "block text-sm font-semibold text-navy-700 mb-1";
+const labelClass = "block text-sm font-semibold text-navy-100 mb-1";
 
 export default function ListingForm({ onResult, onLimitReached }: Props) {
   const [form, setForm] = useState<FormData>(INITIAL);
@@ -224,7 +224,7 @@ export default function ListingForm({ onResult, onLimitReached }: Props) {
                   "border rounded-xl p-3 text-left transition-all",
                   form.tone === t.value
                     ? "border-brown-500 bg-brown-50 ring-2 ring-brown-200"
-                    : "border-navy-200 hover:border-navy-300 bg-white"
+                    : "border-navy-200 hover:border-navy-300 bg-navy-800"
                 )}
               >
                 <div className={clsx(

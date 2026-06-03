@@ -32,7 +32,7 @@ function CopyButton({ text, light = false }: { text: string; light?: boolean }) 
           ? "bg-green-100 text-green-700"
           : light
           ? "bg-navy-800 text-navy-200 hover:bg-navy-700"
-          : "bg-navy-100 text-navy-600 hover:bg-navy-200"
+          : "bg-navy-100 text-navy-200 hover:bg-navy-200"
       )}
     >
       {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
@@ -43,8 +43,8 @@ function CopyButton({ text, light = false }: { text: string; light?: boolean }) 
 
 const VARIANTS = [
   { label: "Option A", bg: "bg-navy-900", border: "border-navy-800", text: "text-navy-200", badge: "text-brown-400 bg-navy-800" },
-  { label: "Option B", bg: "bg-white", border: "border-cream-200", text: "text-navy-700", badge: "text-brown-600 bg-brown-50" },
-  { label: "Option C", bg: "bg-white", border: "border-cream-200", text: "text-navy-700", badge: "text-brown-600 bg-brown-50" },
+  { label: "Option B", bg: "bg-navy-800", border: "border-navy-700", text: "text-navy-100", badge: "text-brown-600 bg-brown-50" },
+  { label: "Option C", bg: "bg-navy-800", border: "border-navy-700", text: "text-navy-100", badge: "text-brown-600 bg-brown-50" },
 ];
 
 export default function OutputDisplay({ output, onReset }: Props) {
@@ -54,12 +54,12 @@ export default function OutputDisplay({ output, onReset }: Props) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-navy-900">Your Listing Descriptions</h2>
+          <h2 className="text-xl font-bold text-white">Your Listing Descriptions</h2>
           <p className="text-sm text-navy-400 mt-0.5">Pick your favorite or mix and match</p>
         </div>
         <button
           onClick={onReset}
-          className="flex items-center gap-2 text-sm text-navy-500 hover:text-navy-800 border border-navy-200 hover:border-navy-400 px-3 py-2 rounded-lg transition-all"
+          className="flex items-center gap-2 text-sm text-navy-300 hover:text-navy-800 border border-navy-200 hover:border-navy-400 px-3 py-2 rounded-lg transition-all"
         >
           <RefreshCw className="w-4 h-4" />
           New Listing
@@ -87,8 +87,8 @@ export default function OutputDisplay({ output, onReset }: Props) {
         })}
       </div>
 
-      <div className="border border-cream-200 rounded-xl p-4 bg-white flex items-center justify-between">
-        <span className="text-sm font-medium text-navy-600">Copy all 3 descriptions</span>
+      <div className="border border-navy-700 rounded-xl p-4 bg-navy-800 flex items-center justify-between">
+        <span className="text-sm font-medium text-navy-200">Copy all 3 descriptions</span>
         <CopyButton
           text={descriptions
             .map((d, i) => `${VARIANTS[i % VARIANTS.length].label}:\n${d}`)

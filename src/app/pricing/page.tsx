@@ -44,17 +44,17 @@ export default function PricingPage() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
           <p className="text-brown-500 text-sm font-bold uppercase tracking-widest mb-3">Pricing</p>
-          <h1 className="text-4xl font-bold text-navy-900">Simple, Honest Pricing</h1>
+          <h1 className="text-4xl font-bold text-white">Simple, Honest Pricing</h1>
           <p className="text-navy-400 mt-3 text-lg">Start free. Upgrade when you&apos;re ready.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
 
           {/* Free */}
-          <div className="bg-white rounded-2xl border border-cream-200 p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-navy-900">Free</h2>
+          <div className="bg-navy-800 rounded-2xl border border-navy-700 p-8 shadow-sm">
+            <h2 className="text-xl font-bold text-white">Free</h2>
             <div className="mt-3 mb-1">
-              <span className="text-4xl font-extrabold text-navy-900">$0</span>
+              <span className="text-4xl font-extrabold text-white">$0</span>
               <span className="text-navy-400 ml-1">/month</span>
             </div>
             <p className="text-navy-400 text-sm mb-7">Perfect for trying it out</p>
@@ -62,13 +62,13 @@ export default function PricingPage() {
               {FREE_FEATURES.map((f) => (
                 <li key={f} className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-brown-500 flex-shrink-0" />
-                  <span className="text-navy-600">{f}</span>
+                  <span className="text-navy-200">{f}</span>
                 </li>
               ))}
             </ul>
             <Link
               href="/generate"
-              className="block w-full text-center bg-navy-100 text-navy-700 hover:bg-navy-200 py-3 rounded-xl font-semibold transition-all"
+              className="block w-full text-center bg-navy-600 text-navy-100 hover:bg-navy-500 py-3 rounded-xl font-semibold transition-all"
             >
               {userPlan === "free" ? "Current Plan" : "Get Started"}
             </Link>
