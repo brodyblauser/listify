@@ -8,6 +8,14 @@ const client = new Anthropic();
 
 const FREE_LIMIT = PLANS.free.limit;
 
+function isNewMonth(resetAt: Date): boolean {
+  const now = new Date();
+  return (
+    now.getFullYear() !== resetAt.getFullYear() ||
+    now.getMonth() !== resetAt.getMonth()
+  );
+}
+
 export async function POST(req: NextRequest) {
   const session = await auth();
 
@@ -16,10 +24,19 @@ export async function POST(req: NextRequest) {
   let usageCount = 0;
 
   if (session?.user?.id) {
-    const user = await prisma.user.findUnique({
+    let user = await prisma.user.findUnique({
       where: { id: session.user.id },
-      select: { plan: true, usageCount: true },
+      select: { plan: true, usageCount: true, usageResetAt: true },
     });
+
+    if (user && isNewMonth(user.usageResetAt)) {
+      user = await prisma.user.update({
+        where: { id: session.user.id },
+        data: { usageCount: 0, usageResetAt: new Date() },
+        select: { plan: true, usageCount: true, usageResetAt: true },
+      });
+    }
+
     userId = session.user.id;
     userPlan = user?.plan ?? "free";
     usageCount = user?.usageCount ?? 0;
@@ -29,7 +46,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         error: "free_limit_reached",
-        message: `You've used all ${FREE_LIMIT} free generations. Upgrade to Pro for unlimited listings.`,
+        message: `You've used all ${FREE_LIMIT} free generations this month. Upgrade to Pro for unlimited listings.`,
       },
       { status: 403 }
     );
@@ -68,9 +85,7 @@ export async function POST(req: NextRequest) {
 
   const priceText = price ? `Listed at $${Number(price).toLocaleString()}.` : "";
   const sqftText = sqft ? `${Number(sqft).toLocaleString()} square feet.` : "";
-  const neighborhoodText = neighborhood
-    ? `Located in ${neighborhood}.`
-    : "";
+  const neighborhoodText = neighborhood ? `Located in ${neighborhood}.` : "";
 
   const prompt = `You are an expert real estate copywriter. Write 3 different MLS listing descriptions for the following property. Each description should be distinct in phrasing but all should accurately represent the property. Number them 1, 2, and 3.
 

@@ -10,14 +10,37 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Listify — AI Real Estate Listing Generator",
+  title: {
+    default: "Listify — AI MLS Listing Description Generator",
+    template: "%s | Listify",
+  },
   description:
-    "Generate compelling MLS listing descriptions in seconds using AI. Save hours every week.",
+    "Generate professional MLS listing descriptions in 30 seconds using AI. Built for real estate agents. Free to try — no credit card required.",
+  keywords: [
+    "MLS listing description generator",
+    "real estate AI tool",
+    "listing copywriter",
+    "real estate agent tools",
+    "automated listing descriptions",
+    "AI real estate",
+  ],
+  authors: [{ name: "Listify" }],
   openGraph: {
-    title: "Listify — AI Real Estate Listing Generator",
+    title: "Listify — AI MLS Listing Description Generator",
     description:
-      "Generate compelling MLS listing descriptions in seconds using AI.",
+      "Generate professional MLS listing descriptions in 30 seconds. Free to try.",
     type: "website",
+    siteName: "Listify",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Listify — AI MLS Listing Description Generator",
+    description:
+      "Generate professional MLS listing descriptions in 30 seconds. Free to try.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

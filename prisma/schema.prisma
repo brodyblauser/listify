@@ -17,6 +17,8 @@ model User {
   stripeCustomerId     String?
   stripeSubscriptionId String?
   usageCount           Int       @default(0)
+  usageResetAt         DateTime  @default(now())
+  isAdmin              Boolean   @default(false)
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
 
