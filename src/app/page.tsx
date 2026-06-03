@@ -1,4 +1,8 @@
+"use client";
+
+import { useRef } from "react";
 import Link from "next/link";
+import { motion, useInView } from "framer-motion";
 import { Sparkles, Clock, Copy, TrendingUp, ArrowRight, MapPin, Bed, Bath, Maximize2, Star } from "lucide-react";
 
 const serif = { fontFamily: "var(--font-playfair, 'Playfair Display', Georgia, serif)" };
@@ -10,6 +14,40 @@ const sandGradient = {
   backgroundClip: "text" as const,
 };
 
+const ease = [0.21, 0.47, 0.32, 0.98] as const;
+
+function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0, y: 36 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.75, ease, delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function FadeIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0 }}
+      animate={inView ? { opacity: 1 } : {}}
+      transition={{ duration: 0.9, ease, delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 const STATS = [
   { number: "500+", label: "Active Agents" },
   { number: "30s", label: "Generation Time" },
@@ -18,47 +56,16 @@ const STATS = [
 ];
 
 const FEATURES = [
-  {
-    icon: Sparkles,
-    title: "AI-Powered Copy",
-    desc: "Claude AI writes professional, compelling descriptions tailored to your property's unique features and your target buyer.",
-  },
-  {
-    icon: Clock,
-    title: "Save Hours Every Week",
-    desc: "What takes 30–60 minutes now takes 30 seconds. Run more listings, show more properties, close more deals.",
-  },
-  {
-    icon: Copy,
-    title: "3 Variations Instantly",
-    desc: "Get three distinct descriptions in different styles. Mix, match, or pick your favorite — ready to paste into MLS.",
-  },
-  {
-    icon: TrendingUp,
-    title: "More Qualified Showings",
-    desc: "Better copy attracts more of the right buyers. Professional descriptions stand out and convert on the MLS.",
-  },
+  { icon: Sparkles, title: "AI-Powered Copy", desc: "Claude AI writes professional, compelling descriptions tailored to your property's unique features and your target buyer." },
+  { icon: Clock, title: "Save Hours Every Week", desc: "What takes 30–60 minutes now takes 30 seconds. Run more listings, show more properties, close more deals." },
+  { icon: Copy, title: "3 Variations Instantly", desc: "Get three distinct descriptions in different styles. Mix, match, or pick your favorite — ready to paste into MLS." },
+  { icon: TrendingUp, title: "More Qualified Showings", desc: "Better copy attracts more of the right buyers. Professional descriptions stand out and convert on the MLS." },
 ];
 
 const TESTIMONIALS = [
-  {
-    name: "Sarah M.",
-    title: "Realtor · Austin, TX",
-    quote: "I used to spend Sunday nights writing listing copy. Now I do it in 30 seconds before the photos are even back.",
-    rating: 5,
-  },
-  {
-    name: "James K.",
-    title: "Broker · Dallas, TX",
-    quote: "My listings get way more clicks since I started using Listify. The luxury tone is unbelievably good.",
-    rating: 5,
-  },
-  {
-    name: "Priya D.",
-    title: "Property Manager · Houston, TX",
-    quote: "Managing 40+ units, this saves me 5–6 hours a month minimum. Worth every penny.",
-    rating: 5,
-  },
+  { name: "Sarah M.", title: "Realtor · Austin, TX", quote: "I used to spend Sunday nights writing listing copy. Now I do it in 30 seconds before the photos are even back.", rating: 5 },
+  { name: "James K.", title: "Broker · Dallas, TX", quote: "My listings get way more clicks since I started using Listify. The luxury tone is unbelievably good.", rating: 5 },
+  { name: "Priya D.", title: "Property Manager · Houston, TX", quote: "Managing 40+ units, this saves me 5–6 hours a month minimum. Worth every penny.", rating: 5 },
 ];
 
 const STEPS = [
@@ -101,12 +108,19 @@ function HouseSVG({ className }: { className?: string }) {
 
 function ProductMockup() {
   return (
-    <div className="relative">
-      {/* Ambient sand glow behind mockup */}
-      <div className="absolute inset-0 rounded-3xl blur-3xl opacity-20" style={{ background: "radial-gradient(ellipse at center, #B89858 0%, transparent 70%)", transform: "scale(1.1) translateY(10%)" }} />
+    <motion.div
+      className="relative"
+      animate={{ y: [0, -12, 0] }}
+      transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+    >
+      {/* Ambient glow */}
+      <div className="absolute inset-0 rounded-3xl pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 80%, rgba(184,152,88,0.22) 0%, transparent 65%)", transform: "scale(1.15) translateY(8%)", filter: "blur(24px)" }} />
 
       {/* Floating badges */}
-      <div className="absolute -top-5 -left-6 z-20 bg-navy-800/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/10 px-4 py-3 flex items-center gap-3">
+      <motion.div
+        className="absolute -top-5 -left-6 z-20 bg-navy-800/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/10 px-4 py-3 flex items-center gap-3"
+        initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.8, duration: 0.6 }}
+      >
         <div className="w-8 h-8 bg-green-500/20 rounded-xl flex items-center justify-center">
           <Clock className="w-4 h-4 text-green-400" />
         </div>
@@ -114,16 +128,19 @@ function ProductMockup() {
           <div className="text-xs font-bold text-white">Saved 47 min</div>
           <div className="text-xs text-navy-400">vs. writing manually</div>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="absolute -top-3 -right-5 z-20 backdrop-blur-md text-white rounded-2xl shadow-xl px-3 py-2 flex items-center gap-1.5 border border-white/10" style={{ background: "rgba(184,152,88,0.85)" }}>
+      <motion.div
+        className="absolute -top-3 -right-5 z-20 backdrop-blur-md text-white rounded-2xl shadow-xl px-3 py-2 flex items-center gap-1.5 border border-white/10"
+        style={{ background: "rgba(184,152,88,0.85)" }}
+        initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.0, duration: 0.6 }}
+      >
         <MapPin className="w-3.5 h-3.5" />
         <span className="text-xs font-bold">Austin, TX</span>
-      </div>
+      </motion.div>
 
       {/* Main window */}
-      <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/[0.08]" style={{ background: "rgba(10, 18, 34, 0.85)", backdropFilter: "blur(20px)" }}>
-        {/* Browser chrome */}
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/[0.08]" style={{ background: "rgba(10, 18, 34, 0.9)", backdropFilter: "blur(20px)" }}>
         <div className="px-4 py-3 flex items-center gap-2 border-b border-white/[0.06]" style={{ background: "rgba(4, 8, 18, 0.6)" }}>
           <div className="flex gap-1.5">
             <div className="w-3 h-3 rounded-full bg-red-400/60" />
@@ -135,7 +152,6 @@ function ProductMockup() {
           </div>
         </div>
 
-        {/* Property header */}
         <div className="px-5 py-4 border-b border-white/[0.06]">
           <div className="flex items-start gap-4">
             <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 border border-white/10">
@@ -158,7 +174,6 @@ function ProductMockup() {
           </div>
         </div>
 
-        {/* Output */}
         <div className="px-5 py-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
@@ -167,7 +182,7 @@ function ProductMockup() {
             </div>
             <div className="flex gap-1">
               {[1, 2, 3].map((n) => (
-                <button key={n} className={`text-xs w-6 h-6 rounded-lg font-medium transition-colors ${n === 1 ? "text-white border border-white/20" : "text-navy-500"}`} style={n === 1 ? { background: "rgba(255,255,255,0.08)" } : {}}>
+                <button key={n} className={`text-xs w-6 h-6 rounded-lg font-medium ${n === 1 ? "text-white border border-white/20" : "text-navy-500"}`} style={n === 1 ? { background: "rgba(255,255,255,0.08)" } : {}}>
                   {n}
                 </button>
               ))}
@@ -181,13 +196,12 @@ function ProductMockup() {
           </p>
           <div className="mt-4 flex items-center justify-between">
             <span className="text-xs text-navy-500">Variation 1 of 3 · Luxury</span>
-            <button className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors border border-white/10" style={{ background: "rgba(184,152,88,0.12)", color: "#D4BC82" }}>
+            <button className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-white/10" style={{ background: "rgba(184,152,88,0.12)", color: "#D4BC82" }}>
               <Copy className="w-3 h-3" /> Copy
             </button>
           </div>
         </div>
 
-        {/* Generating indicator */}
         <div className="px-5 py-2.5 flex items-center gap-2 border-t border-white/[0.04]" style={{ background: "rgba(4,8,18,0.4)" }}>
           <div className="flex gap-1">
             {[0, 150, 300].map((d) => (
@@ -198,8 +212,10 @@ function ProductMockup() {
         </div>
       </div>
 
-      {/* Bottom badge */}
-      <div className="absolute -bottom-4 -right-4 z-20 bg-navy-800/95 backdrop-blur-md text-white rounded-2xl shadow-xl px-4 py-2.5 flex items-center gap-2.5 border border-white/10">
+      <motion.div
+        className="absolute -bottom-4 -right-4 z-20 bg-navy-800/95 backdrop-blur-md text-white rounded-2xl shadow-xl px-4 py-2.5 flex items-center gap-2.5 border border-white/10"
+        initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2, duration: 0.6 }}
+      >
         <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center">
           <div className="w-2 h-2 rounded-full bg-green-400" />
         </div>
@@ -207,8 +223,8 @@ function ProductMockup() {
           <div className="text-xs font-bold">MLS Ready</div>
           <div className="text-xs text-navy-400">Paste directly in</div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -218,34 +234,48 @@ export default function LandingPage() {
 
       {/* ── Hero ── */}
       <section className="relative overflow-hidden pt-28 pb-44">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full blur-[150px] pointer-events-none" style={{ background: "radial-gradient(circle, rgba(184,152,88,0.07) 0%, transparent 60%)", transform: "translate(30%, -20%)" }} />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none" style={{ background: "radial-gradient(circle, rgba(30,52,80,0.4) 0%, transparent 60%)", transform: "translate(-30%, 30%)" }} />
+        {/* Animated depth blobs */}
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(184,152,88,0.10) 0%, transparent 65%)", animation: "blob 12s ease-in-out infinite", filter: "blur(60px)" }} />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(30,52,80,0.35) 0%, transparent 65%)", animation: "blob2 15s ease-in-out infinite", filter: "blur(60px)" }} />
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(184,152,88,0.05) 0%, transparent 65%)", animation: "blob 18s ease-in-out infinite reverse", filter: "blur(80px)" }} />
         <div className="absolute bottom-0 inset-x-0 h-48 pointer-events-none" style={{ background: "linear-gradient(to top, #060D18, transparent)" }} />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 text-xs font-medium px-4 py-1.5 rounded-full mb-10 tracking-widest uppercase border border-white/10" style={{ background: "rgba(184,152,88,0.08)", color: "#C4A05A" }}>
-                <Sparkles className="w-3 h-3" />
-                Powered by Claude AI
-              </div>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease }}>
+                <div className="inline-flex items-center gap-2 text-xs font-medium px-4 py-1.5 rounded-full mb-10 tracking-widest uppercase border border-white/10" style={{ background: "rgba(184,152,88,0.08)", color: "#C4A05A" }}>
+                  <Sparkles className="w-3 h-3" />
+                  Powered by Claude AI
+                </div>
+              </motion.div>
 
-              <h1 style={{ ...serif }} className="text-6xl sm:text-7xl lg:text-[80px] font-bold text-white leading-[1.0] tracking-tight">
+              <motion.h1
+                style={serif}
+                className="text-6xl sm:text-7xl lg:text-[80px] font-bold text-white leading-[1.0] tracking-tight"
+                initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease, delay: 0.1 }}
+              >
                 Write MLS<br />
                 Listings in<br />
                 <span style={sandGradient}>30 Seconds.</span>
-              </h1>
+              </motion.h1>
 
-              <p className="mt-7 text-lg text-navy-300 leading-relaxed max-w-md">
+              <motion.p
+                className="mt-7 text-lg text-navy-300 leading-relaxed max-w-md"
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease, delay: 0.25 }}
+              >
                 Stop spending hours on listing copy. Listify generates compelling,
                 professional descriptions instantly — so you can focus on closing deals.
-              </p>
+              </motion.p>
 
-              <div className="mt-10 flex flex-col sm:flex-row gap-3">
+              <motion.div
+                className="mt-10 flex flex-col sm:flex-row gap-3"
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease, delay: 0.38 }}
+              >
                 <Link
                   href="/generate"
-                  className="group flex items-center justify-center gap-2 text-white px-7 py-3.5 rounded-xl font-semibold text-base transition-all shadow-lg text-center"
-                  style={{ background: "linear-gradient(135deg, #C4A05A, #8C6828)", boxShadow: "0 8px 32px rgba(184,152,88,0.2)" }}
+                  className="group flex items-center justify-center gap-2 text-white px-7 py-3.5 rounded-xl font-semibold text-base transition-all text-center"
+                  style={{ background: "linear-gradient(135deg, #C4A05A, #8C6828)", boxShadow: "0 8px 32px rgba(184,152,88,0.22)" }}
                 >
                   Try Free — No Card Needed
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -256,65 +286,87 @@ export default function LandingPage() {
                 >
                   See Pricing
                 </Link>
-              </div>
+              </motion.div>
 
-              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
+              <motion.div
+                className="mt-8 flex flex-wrap gap-x-6 gap-y-2"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7, delay: 0.5 }}
+              >
                 {["500+ agents", "4.9 ★ rating", "All MLS formats"].map((item) => (
                   <span key={item} className="flex items-center gap-1.5 text-sm text-navy-400">
                     <span style={{ color: "#B89858" }}>·</span> {item}
                   </span>
                 ))}
-              </div>
+              </motion.div>
             </div>
 
-            <div className="hidden lg:flex justify-center items-center pt-12 pb-10">
+            <motion.div
+              className="hidden lg:flex justify-center items-center pt-12 pb-10"
+              initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9, ease, delay: 0.3 }}
+            >
               <div className="w-full max-w-md">
                 <ProductMockup />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* ── Stats ── */}
       <section className="py-12 relative">
-        <div className="max-w-3xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4">
-            {STATS.map((s, i) => (
-              <div key={s.label} className={`text-center py-6 ${i > 0 ? "border-l border-white/[0.06]" : ""}`}>
-                <div className="text-4xl sm:text-5xl font-extrabold" style={{ ...serif, ...sandGradient }}>{s.number}</div>
-                <div className="mt-2 text-xs text-navy-400 tracking-wider uppercase">{s.label}</div>
-              </div>
-            ))}
+        <FadeIn>
+          <div className="max-w-3xl mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4">
+              {STATS.map((s, i) => (
+                <motion.div
+                  key={s.label}
+                  className={`text-center py-6 ${i > 0 ? "border-l border-white/[0.06]" : ""}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                >
+                  <div className="text-4xl sm:text-5xl font-extrabold" style={{ ...serif, ...sandGradient }}>{s.number}</div>
+                  <div className="mt-2 text-xs text-navy-400 tracking-wider uppercase">{s.label}</div>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
+        </FadeIn>
       </section>
 
       {/* ── How It Works ── */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-          <div className="w-[600px] h-[300px] rounded-full blur-[100px]" style={{ background: "radial-gradient(ellipse, rgba(184,152,88,0.05) 0%, transparent 70%)" }} />
+          <div className="w-[700px] h-[350px] rounded-full" style={{ background: "radial-gradient(ellipse, rgba(184,152,88,0.05) 0%, transparent 70%)", filter: "blur(80px)", animation: "blob2 20s ease-in-out infinite" }} />
         </div>
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-20">
+          <FadeUp className="mb-20">
             <p className="text-xs font-semibold uppercase tracking-[0.25em] mb-5" style={{ color: "#B89858" }}>How It Works</p>
             <h2 style={serif} className="text-5xl sm:text-6xl font-bold text-white leading-tight">
               From details<br />to done.
             </h2>
-          </div>
+          </FadeUp>
 
           <div className="space-y-16">
-            {STEPS.map((step) => (
-              <div key={step.num} className="flex items-start gap-8 md:gap-14 group">
-                <div className="text-[80px] md:text-[100px] font-black leading-none select-none flex-shrink-0 w-20 md:w-28 text-right transition-all duration-500" style={{ ...serif, color: "rgba(184,152,88,0.08)" }}>
+            {STEPS.map((step, i) => (
+              <motion.div
+                key={step.num}
+                className="flex items-start gap-8 md:gap-14"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.7, ease, delay: i * 0.1 }}
+              >
+                <div className="text-[80px] md:text-[100px] font-black leading-none select-none flex-shrink-0 w-20 md:w-28 text-right" style={{ ...serif, color: "rgba(184,152,88,0.09)" }}>
                   {step.num}
                 </div>
                 <div className="pt-2 flex-1">
                   <h3 className="text-2xl font-bold text-white mb-3">{step.title}</h3>
                   <p className="text-navy-300 text-base leading-relaxed max-w-sm">{step.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -322,11 +374,11 @@ export default function LandingPage() {
 
       {/* ── Features ── */}
       <section className="relative py-32 overflow-hidden">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none" style={{ background: "radial-gradient(circle, rgba(184,152,88,0.05) 0%, transparent 60%)" }} />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(184,152,88,0.06) 0%, transparent 60%)", filter: "blur(80px)", animation: "blob 16s ease-in-out infinite" }} />
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
-            <div className="lg:sticky lg:top-32">
+            <FadeUp className="lg:sticky lg:top-32">
               <p className="text-xs font-semibold uppercase tracking-[0.25em] mb-5" style={{ color: "#B89858" }}>Features</p>
               <h2 style={serif} className="text-5xl sm:text-6xl font-bold text-white leading-tight mb-6">
                 Built for<br />Busy Agents
@@ -341,19 +393,26 @@ export default function LandingPage() {
               >
                 Try It Free <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
+            </FadeUp>
 
             <div className="space-y-10">
-              {FEATURES.map((f) => (
-                <div key={f.title} className="flex gap-5 group">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 border border-white/10 transition-all group-hover:border-white/20" style={{ background: "rgba(184,152,88,0.08)" }}>
+              {FEATURES.map((f, i) => (
+                <motion.div
+                  key={f.title}
+                  className="flex gap-5 group"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.6, ease, delay: i * 0.08 }}
+                >
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 border border-white/10 transition-all group-hover:border-white/25" style={{ background: "rgba(184,152,88,0.08)" }}>
                     <f.icon className="w-5 h-5" style={{ color: "#C4A05A" }} />
                   </div>
                   <div>
                     <h3 className="font-bold text-white text-lg mb-1.5">{f.title}</h3>
                     <p className="text-navy-300 leading-relaxed">{f.desc}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -363,26 +422,28 @@ export default function LandingPage() {
       {/* ── Testimonials ── */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-          <div className="w-[800px] h-[400px] rounded-full blur-[120px]" style={{ background: "radial-gradient(ellipse, rgba(14,28,46,0.6) 0%, transparent 70%)" }} />
+          <div className="w-[900px] h-[400px] rounded-full" style={{ background: "radial-gradient(ellipse, rgba(14,28,46,0.5) 0%, transparent 70%)", filter: "blur(100px)" }} />
         </div>
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-16">
+          <FadeUp className="mb-16">
             <p className="text-xs font-semibold uppercase tracking-[0.25em] mb-5" style={{ color: "#B89858" }}>Testimonials</p>
             <h2 style={serif} className="text-5xl sm:text-6xl font-bold text-white">Agents Love It</h2>
-          </div>
+          </FadeUp>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t, i) => (
-              <div
+              <motion.div
                 key={t.name}
                 className={`rounded-3xl p-8 border border-white/[0.06] ${i === 1 ? "md:mt-8" : ""}`}
-                style={{ background: "rgba(10,18,34,0.6)", backdropFilter: "blur(10px)" }}
+                style={{ background: "rgba(10,18,34,0.7)", backdropFilter: "blur(12px)" }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.7, ease, delay: i * 0.12 }}
               >
-                <div style={{ ...serif, fontSize: 72, lineHeight: 0.8, marginBottom: 24, color: "#B89858", opacity: 0.5 }}>&ldquo;</div>
-                <blockquote className="text-navy-100 leading-relaxed mb-7 text-sm">
-                  {t.quote}
-                </blockquote>
+                <div style={{ ...serif, fontSize: 72, lineHeight: 0.8, marginBottom: 24, color: "#B89858", opacity: 0.45 }}>&ldquo;</div>
+                <blockquote className="text-navy-100 leading-relaxed mb-7 text-sm">{t.quote}</blockquote>
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold border border-white/10" style={{ background: "rgba(184,152,88,0.12)", color: "#C4A05A" }}>
                     {t.name[0]}
@@ -397,7 +458,7 @@ export default function LandingPage() {
                   </div>
                   <div className="ml-auto text-xs text-navy-500">{t.title.split("·")[1]?.trim()}</div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -406,27 +467,29 @@ export default function LandingPage() {
       {/* ── CTA ── */}
       <section className="relative py-40 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-          <div className="w-[700px] h-[400px] rounded-full blur-[120px]" style={{ background: "radial-gradient(ellipse, rgba(184,152,88,0.07) 0%, transparent 70%)" }} />
+          <div className="w-[700px] h-[400px] rounded-full" style={{ background: "radial-gradient(ellipse, rgba(184,152,88,0.08) 0%, transparent 70%)", filter: "blur(100px)", animation: "blob 14s ease-in-out infinite" }} />
         </div>
         <div className="absolute inset-x-0 top-0 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(184,152,88,0.2), transparent)" }} />
 
-        <div className="relative max-w-2xl mx-auto text-center px-4">
-          <h2 style={serif} className="text-5xl sm:text-6xl font-bold text-white leading-tight mb-6">
-            Ready to reclaim<br />your Sunday nights?
-          </h2>
-          <p className="text-navy-300 mb-10 text-xl leading-relaxed">
-            Start free. No credit card. First 3 listings on us — every month.
-          </p>
-          <Link
-            href="/generate"
-            className="inline-flex items-center gap-2 text-white px-10 py-4 rounded-xl font-bold text-lg transition-all"
-            style={{ background: "linear-gradient(135deg, #C4A05A, #8C6828)", boxShadow: "0 8px 40px rgba(184,152,88,0.25)" }}
-          >
-            Generate Your First Listing Free
-            <ArrowRight className="w-5 h-5" />
-          </Link>
-          <p className="mt-5 text-sm text-navy-500">No credit card · Cancel anytime</p>
-        </div>
+        <FadeUp>
+          <div className="relative max-w-2xl mx-auto text-center px-4">
+            <h2 style={serif} className="text-5xl sm:text-6xl font-bold text-white leading-tight mb-6">
+              Ready to reclaim<br />your Sunday nights?
+            </h2>
+            <p className="text-navy-300 mb-10 text-xl leading-relaxed">
+              Start free. No credit card. First 3 listings on us — every month.
+            </p>
+            <Link
+              href="/generate"
+              className="inline-flex items-center gap-2 text-white px-10 py-4 rounded-xl font-bold text-lg transition-all"
+              style={{ background: "linear-gradient(135deg, #C4A05A, #8C6828)", boxShadow: "0 8px 40px rgba(184,152,88,0.28)" }}
+            >
+              Generate Your First Listing Free
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <p className="mt-5 text-sm text-navy-500">No credit card · Cancel anytime</p>
+          </div>
+        </FadeUp>
       </section>
 
     </div>

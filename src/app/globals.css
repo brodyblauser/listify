@@ -71,6 +71,25 @@ html {
   scroll-behavior: smooth;
 }
 
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%       { transform: translate(40px, -60px) scale(1.08); }
+  50%       { transform: translate(-30px, 30px) scale(0.94); }
+  75%       { transform: translate(20px, 50px) scale(1.04); }
+}
+
+@keyframes blob2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%       { transform: translate(-50px, 40px) scale(1.06); }
+  50%       { transform: translate(30px, -40px) scale(0.96); }
+  75%       { transform: translate(-20px, -20px) scale(1.02); }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
+
 ::selection {
   background: #1E3450;
   color: #D8E2F0;
