@@ -5,7 +5,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Loader2, Home } from "lucide-react";
+import { Loader2, Home, Eye, EyeOff } from "lucide-react";
 
 function SignupForm() {
   const router = useRouter();
@@ -15,6 +15,9 @@ function SignupForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -24,6 +27,11 @@ function SignupForm() {
 
     if (password.length < 8) {
       setError("Password must be at least 8 characters.");
+      return;
+    }
+
+    if (password !== confirm) {
+      setError("Passwords don't match.");
       return;
     }
 
@@ -92,15 +100,50 @@ function SignupForm() {
         <label className="block text-sm font-medium text-navy-100 mb-1">
           Password <span className="text-red-500">*</span>
         </label>
-        <input
-          type="password"
-          required
-          autoComplete="new-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full border border-navy-200 rounded-lg px-4 py-2.5 text-white placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent"
-          placeholder="Min 8 characters"
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            required
+            autoComplete="new-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full border border-navy-200 rounded-lg px-4 py-2.5 pr-10 text-white placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent"
+            placeholder="Min 8 characters"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((v) => !v)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-navy-400 hover:text-navy-200 transition-colors"
+            tabIndex={-1}
+          >
+            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-navy-100 mb-1">
+          Confirm Password <span className="text-red-500">*</span>
+        </label>
+        <div className="relative">
+          <input
+            type={showConfirm ? "text" : "password"}
+            required
+            autoComplete="new-password"
+            value={confirm}
+            onChange={(e) => setConfirm(e.target.value)}
+            className="w-full border border-navy-200 rounded-lg px-4 py-2.5 pr-10 text-white placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-brown-400 focus:border-transparent"
+            placeholder="Re-enter password"
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirm((v) => !v)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-navy-400 hover:text-navy-200 transition-colors"
+            tabIndex={-1}
+          >
+            {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+          </button>
+        </div>
       </div>
 
       {error && (
