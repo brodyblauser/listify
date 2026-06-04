@@ -43,6 +43,12 @@ export default function Navbar() {
             {session ? (
               <>
                 <Link
+                  href="/listings"
+                  className="text-navy-200 hover:text-white hover:bg-navy-800 px-3 py-2 rounded-lg text-sm font-medium transition-all"
+                >
+                  My Listings
+                </Link>
+                <Link
                   href="/dashboard"
                   className="text-navy-200 hover:text-white hover:bg-navy-800 px-3 py-2 rounded-lg text-sm font-medium transition-all"
                 >
@@ -102,6 +108,13 @@ export default function Navbar() {
           </Link>
           {session ? (
             <>
+              <Link
+                href="/listings"
+                className="text-navy-200 hover:text-white hover:bg-navy-800 px-3 py-2.5 rounded-lg text-sm font-medium"
+                onClick={() => setOpen(false)}
+              >
+                My Listings
+              </Link>
               <Link
                 href="/dashboard"
                 className="text-navy-200 hover:text-white hover:bg-navy-800 px-3 py-2.5 rounded-lg text-sm font-medium"
