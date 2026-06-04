@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Trash2, Copy, Check, Sparkles, Crown, AlertCircle, FileText } from "lucide-react";
+import { Trash2, Copy, Check, Sparkles, Crown, AlertCircle, FileText, ArrowRight } from "lucide-react";
 import clsx from "clsx";
 
 type Listing = {
@@ -176,6 +176,38 @@ function DashboardContent() {
             </div>
           </div>
         </div>
+
+        {/* Onboarding checklist for new users */}
+        {listings.length === 0 && (
+          <div className="bg-navy-800 border border-navy-700 rounded-2xl p-6 mb-8">
+            <h2 className="font-bold text-white mb-1">Get started with Listify</h2>
+            <p className="text-navy-400 text-sm mb-5">Complete these steps to get the most out of your account.</p>
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-5 h-5 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center flex-shrink-0">
+                  <Check className="w-3 h-3 text-green-400" />
+                </div>
+                <span className="text-sm text-navy-300 line-through">Create your account</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-5 h-5 rounded-full border border-navy-600 flex-shrink-0" />
+                <Link href="/generate" className="text-sm text-white hover:text-brown-400 transition-colors flex items-center gap-1.5">
+                  Generate your first listing <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-5 h-5 rounded-full border border-navy-600 flex-shrink-0" />
+                {userPlan === "free" ? (
+                  <Link href="/pricing" className="text-sm text-white hover:text-brown-400 transition-colors flex items-center gap-1.5">
+                    Upgrade to Pro for unlimited listings <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                ) : (
+                  <span className="text-sm text-navy-300 line-through">Upgrade to Pro</span>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Cancel subscription */}
         {(userPlan === "pro" || userPlan === "canceling") && (

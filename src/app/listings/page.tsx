@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Search, Sparkles, Trash2, Copy, Check, FileText,
-  ChevronDown, ChevronUp, SlidersHorizontal, X
+  ChevronDown, ChevronUp, SlidersHorizontal, X, Download
 } from "lucide-react";
 import clsx from "clsx";
 
@@ -202,6 +202,35 @@ export default function ListingsPage() {
 
   const hasFilters = search || filterType || filterTone || sortOrder !== "newest";
 
+  const exportCSV = () => {
+    const headers = ["Date", "Address", "Neighborhood", "Type", "Beds", "Baths", "Sqft", "Price", "Tone", "Option A", "Option B", "Option C"];
+    const rows = filtered.map((l) => {
+      const parts = l.output.split(/\n\n(?=\d+\.)/).filter(Boolean).map((p) => p.replace(/^\d+\.\s*/, "").trim());
+      return [
+        new Date(l.createdAt).toLocaleDateString(),
+        l.address,
+        l.neighborhood ?? "",
+        l.propertyType,
+        l.beds,
+        l.baths,
+        l.sqft ?? "",
+        l.price ?? "",
+        l.tone,
+        parts[0] ?? "",
+        parts[1] ?? "",
+        parts[2] ?? "",
+      ].map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",");
+    });
+    const csv = [headers.join(","), ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `listify-listings-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const clearFilters = () => {
     setSearch("");
     setFilterType("");
@@ -232,14 +261,25 @@ export default function ListingsPage() {
               {filtered.length !== listings.length && ` · ${filtered.length} shown`}
             </p>
           </div>
-          <Link
-            href="/generate"
-            className="flex items-center gap-2 text-sm font-semibold text-white px-4 py-2 rounded-xl transition-all"
-            style={{ background: "linear-gradient(135deg, #C4A05A, #8C6828)" }}
-          >
-            <Sparkles className="w-4 h-4" />
-            New Listing
-          </Link>
+          <div className="flex items-center gap-2">
+            {filtered.length > 0 && (
+              <button
+                onClick={exportCSV}
+                className="flex items-center gap-1.5 text-sm font-medium text-navy-300 hover:text-white px-3 py-2 rounded-xl border border-navy-700 hover:border-navy-600 bg-navy-800 transition-all"
+              >
+                <Download className="w-4 h-4" />
+                Export CSV
+              </button>
+            )}
+            <Link
+              href="/generate"
+              className="flex items-center gap-2 text-sm font-semibold text-white px-4 py-2 rounded-xl transition-all"
+              style={{ background: "linear-gradient(135deg, #C4A05A, #8C6828)" }}
+            >
+              <Sparkles className="w-4 h-4" />
+              New Listing
+            </Link>
+          </div>
         </div>
 
         {/* Search + Filters */}

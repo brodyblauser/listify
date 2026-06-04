@@ -54,6 +54,12 @@ export default function Navbar() {
                 >
                   Dashboard
                 </Link>
+                <Link
+                  href="/account"
+                  className="text-navy-200 hover:text-white hover:bg-navy-800 px-3 py-2 rounded-lg text-sm font-medium transition-all"
+                >
+                  Account
+                </Link>
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
                   className="text-navy-300 hover:text-white hover:bg-navy-800 px-3 py-2 rounded-lg text-sm font-medium transition-all ml-1"
@@ -121,6 +127,13 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
               >
                 Dashboard
+              </Link>
+              <Link
+                href="/account"
+                className="text-navy-200 hover:text-white hover:bg-navy-800 px-3 py-2.5 rounded-lg text-sm font-medium"
+                onClick={() => setOpen(false)}
+              >
+                Account
               </Link>
               <button
                 onClick={() => { setOpen(false); signOut({ callbackUrl: "/" }); }}
