@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const { data: session } = useSession();
+  const isAdmin = (session?.user as { isAdmin?: boolean })?.isAdmin ?? false;
   const [open, setOpen] = useState(false);
 
   return (
@@ -60,6 +61,14 @@ export default function Navbar() {
                 >
                   Account
                 </Link>
+                {isAdmin && (
+                  <Link
+                    href="/admin"
+                    className="text-brown-400 hover:text-brown-300 hover:bg-navy-800 px-3 py-2 rounded-lg text-sm font-semibold transition-all"
+                  >
+                    Admin
+                  </Link>
+                )}
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
                   className="text-navy-300 hover:text-white hover:bg-navy-800 px-3 py-2 rounded-lg text-sm font-medium transition-all ml-1"
@@ -135,6 +144,15 @@ export default function Navbar() {
               >
                 Account
               </Link>
+              {isAdmin && (
+                <Link
+                  href="/admin"
+                  className="text-brown-400 hover:text-brown-300 hover:bg-navy-800 px-3 py-2.5 rounded-lg text-sm font-semibold"
+                  onClick={() => setOpen(false)}
+                >
+                  Admin
+                </Link>
+              )}
               <button
                 onClick={() => { setOpen(false); signOut({ callbackUrl: "/" }); }}
                 className="text-left text-navy-300 hover:text-white px-3 py-2.5 rounded-lg text-sm font-medium"

@@ -279,21 +279,6 @@ export default function AdminPage() {
               )}
             </div>
 
-            {/* Quick Links */}
-            <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-4">
-              <p className="text-sm font-semibold text-amber-800 mb-2">
-                Make yourself admin
-              </p>
-              <p className="text-xs text-amber-700 leading-relaxed">
-                Run this in your terminal to grant admin access to your account:
-              </p>
-              <code className="block mt-2 text-xs bg-amber-100 text-amber-900 px-3 py-2 rounded-lg font-mono break-all">
-                npx prisma studio
-              </code>
-              <p className="text-xs text-amber-600 mt-1">
-                Then set <strong>isAdmin = true</strong> on your user row.
-              </p>
-            </div>
           </div>
         </div>
       </div>

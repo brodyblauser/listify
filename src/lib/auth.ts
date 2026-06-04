@@ -38,6 +38,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           name: user.name,
           plan: user.plan,
           usageCount: user.usageCount,
+          isAdmin: user.isAdmin,
         };
       },
     }),
@@ -48,6 +49,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.id = user.id;
         token.plan = (user as { plan?: string }).plan ?? "free";
         token.usageCount = (user as { usageCount?: number }).usageCount ?? 0;
+        token.isAdmin = (user as { isAdmin?: boolean }).isAdmin ?? false;
       }
       return token;
     },
@@ -55,8 +57,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (token) {
         session.user.id = token.id as string;
         (session.user as { plan?: string }).plan = token.plan as string;
-        (session.user as { usageCount?: number }).usageCount =
-          token.usageCount as number;
+        (session.user as { usageCount?: number }).usageCount = token.usageCount as number;
+        (session.user as { isAdmin?: boolean }).isAdmin = token.isAdmin as boolean;
       }
       return session;
     },
