@@ -9,7 +9,7 @@ export async function GET() {
 
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
-    select: { id: true, name: true, email: true, plan: true, createdAt: true, usageCount: true },
+    select: { id: true, name: true, email: true, plan: true, createdAt: true, usageCount: true, agentVoice: true },
   });
 
   return NextResponse.json({ user });
@@ -20,7 +20,7 @@ export async function PATCH(req: NextRequest) {
   if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json();
-  const { name, email, currentPassword, newPassword } = body;
+  const { name, email, currentPassword, newPassword, agentVoice } = body;
 
   const user = await prisma.user.findUnique({ where: { id: session.user.id } });
   if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -37,6 +37,10 @@ export async function PATCH(req: NextRequest) {
     const existing = await prisma.user.findUnique({ where: { email: email.trim() } });
     if (existing) return NextResponse.json({ error: "That email is already in use" }, { status: 409 });
     updates.email = email.trim();
+  }
+
+  if (agentVoice !== undefined) {
+    updates.agentVoice = agentVoice.trim();
   }
 
   if (newPassword) {

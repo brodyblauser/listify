@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Loader2, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Loader2, Sparkles, Mic } from "lucide-react";
 import clsx from "clsx";
 import type { ComplianceResult } from "@/lib/fairHousing";
+import { useSession } from "next-auth/react";
 
 type FormData = {
   address: string;
@@ -56,9 +57,19 @@ const inputClass =
 const labelClass = "block text-sm font-semibold text-navy-100 mb-1";
 
 export default function ListingForm({ initialValues, onResult, onLimitReached }: Props) {
+  const { data: session } = useSession();
   const [form, setForm] = useState<FormData>({ ...INITIAL, ...initialValues });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [hasVoice, setHasVoice] = useState(false);
+
+  useEffect(() => {
+    if (session?.user) {
+      fetch("/api/account").then(r => r.json()).then(d => {
+        setHasVoice(!!d.user?.agentVoice?.trim());
+      });
+    }
+  }, [session]);
 
   const set = (field: keyof FormData, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -246,6 +257,13 @@ export default function ListingForm({ initialValues, onResult, onLimitReached }:
           </div>
         </div>
       </div>
+
+      {hasVoice && (
+        <div className="flex items-center gap-2 text-xs text-brown-300 bg-brown-900/20 border border-brown-700/30 rounded-lg px-3 py-2">
+          <Mic className="w-3.5 h-3.5 flex-shrink-0 text-brown-400" />
+          Your personal writing style will be applied to this generation
+        </div>
+      )}
 
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { User, Lock, Crown, Check, Loader2, ArrowRight } from "lucide-react";
+import { User, Lock, Crown, Check, Loader2, ArrowRight, Mic } from "lucide-react";
 import clsx from "clsx";
 
 const inputClass = "w-full bg-navy-700 border border-navy-600 rounded-xl px-4 py-2.5 text-white placeholder-navy-500 text-sm focus:outline-none focus:ring-2 focus:ring-brown-500/40 focus:border-brown-500/60 transition-all";
@@ -51,6 +51,7 @@ export default function AccountPage() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [agentVoice, setAgentVoice] = useState("");
 
   const [profileLoading, setProfileLoading] = useState(false);
   const [profileSaved, setProfileSaved] = useState(false);
@@ -59,6 +60,10 @@ export default function AccountPage() {
   const [passwordLoading, setPasswordLoading] = useState(false);
   const [passwordSaved, setPasswordSaved] = useState(false);
   const [passwordError, setPasswordError] = useState("");
+
+  const [voiceLoading, setVoiceLoading] = useState(false);
+  const [voiceSaved, setVoiceSaved] = useState(false);
+  const [voiceError, setVoiceError] = useState("");
 
   const userPlan = (session?.user as { plan?: string })?.plan ?? "free";
 
@@ -70,6 +75,9 @@ export default function AccountPage() {
     if (session?.user) {
       setName(session.user.name ?? "");
       setEmail(session.user.email ?? "");
+      fetch("/api/account").then(r => r.json()).then(d => {
+        if (d.user?.agentVoice) setAgentVoice(d.user.agentVoice);
+      });
     }
   }, [session]);
 
@@ -88,6 +96,22 @@ export default function AccountPage() {
     setProfileSaved(true);
     setTimeout(() => setProfileSaved(false), 3000);
     await update({ name, email });
+  };
+
+  const handleVoiceSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setVoiceError("");
+    setVoiceLoading(true);
+    const res = await fetch("/api/account", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ agentVoice }),
+    });
+    const data = await res.json();
+    setVoiceLoading(false);
+    if (!res.ok) { setVoiceError(data.error ?? "Something went wrong"); return; }
+    setVoiceSaved(true);
+    setTimeout(() => setVoiceSaved(false), 3000);
   };
 
   const handlePasswordSave = async (e: React.FormEvent) => {
@@ -182,6 +206,56 @@ export default function AccountPage() {
             )}
             <div className="flex justify-end pt-1">
               <SaveButton loading={profileLoading} saved={profileSaved} />
+            </div>
+          </form>
+        </Section>
+
+        {/* Agent Voice */}
+        <Section title="Your Writing Style" icon={Mic}>
+          <form onSubmit={handleVoiceSave} className="space-y-4">
+            <div className="bg-navy-700/50 border border-navy-600/50 rounded-xl p-4">
+              <p className="text-sm text-navy-300 leading-relaxed">
+                Paste 1–3 of your best listing descriptions below. Listify will study your vocabulary, sentence rhythm, and personality — and write every future listing in <strong className="text-white">your voice</strong>, not generic AI copy.
+              </p>
+            </div>
+            <div>
+              <label className={labelClass}>
+                Your Best Listings{" "}
+                <span className="text-navy-500 font-normal">(paste 1–3 examples, separated by a blank line)</span>
+              </label>
+              <textarea
+                rows={10}
+                value={agentVoice}
+                onChange={(e) => setAgentVoice(e.target.value)}
+                placeholder={`Example 1:\nNestled in the heart of South Austin, this stunning 4-bedroom craftsman blends timeless character with modern upgrades. Soaring ceilings, wide-plank oak floors, and a chef's kitchen with quartz countertops set the stage for exceptional living. The private backyard retreat features a covered deck perfect for entertaining. Don't miss this rare opportunity.\n\nExample 2:\nWelcome home to this beautifully updated bungalow just steps from the best of South Congress...`}
+                className={`${inputClass} resize-none font-mono text-xs leading-relaxed`}
+              />
+              <p className="text-xs text-navy-500 mt-1.5">
+                {agentVoice.trim() ? `${agentVoice.trim().split(/\s+/).length} words saved` : "No style saved yet — generations use the default AI voice"}
+              </p>
+            </div>
+            {agentVoice.trim() && (
+              <div className="flex items-center gap-2 text-xs text-green-400 bg-green-900/20 border border-green-800/30 rounded-lg px-3 py-2">
+                <Check className="w-3.5 h-3.5 flex-shrink-0" />
+                Your style will be applied to every listing you generate
+              </div>
+            )}
+            {voiceError && (
+              <p className="text-sm text-red-400 bg-red-900/20 border border-red-800/40 rounded-lg px-3 py-2">{voiceError}</p>
+            )}
+            <div className="flex items-center justify-between pt-1">
+              {agentVoice.trim() && (
+                <button
+                  type="button"
+                  onClick={() => setAgentVoice("")}
+                  className="text-xs text-navy-500 hover:text-red-400 transition-colors"
+                >
+                  Clear style
+                </button>
+              )}
+              <div className="ml-auto">
+                <SaveButton loading={voiceLoading} saved={voiceSaved} />
+              </div>
             </div>
           </form>
         </Section>

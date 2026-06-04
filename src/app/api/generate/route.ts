@@ -70,24 +70,26 @@ export async function POST(req: NextRequest) {
   let userId: string | null = null;
   let userPlan = "free";
   let usageCount = 0;
+  let agentVoice: string | null = null;
 
   if (session?.user?.id) {
     let user = await prisma.user.findUnique({
       where: { id: session.user.id },
-      select: { plan: true, usageCount: true, usageResetAt: true },
+      select: { plan: true, usageCount: true, usageResetAt: true, agentVoice: true },
     });
 
     if (user && isNewMonth(user.usageResetAt)) {
       user = await prisma.user.update({
         where: { id: session.user.id },
         data: { usageCount: 0, usageResetAt: new Date() },
-        select: { plan: true, usageCount: true, usageResetAt: true },
+        select: { plan: true, usageCount: true, usageResetAt: true, agentVoice: true },
       });
     }
 
     userId = session.user.id;
     userPlan = user?.plan ?? "free";
     usageCount = user?.usageCount ?? 0;
+    agentVoice = user?.agentVoice ?? null;
   }
 
   if (userPlan === "free" && usageCount >= FREE_LIMIT) {
@@ -157,7 +159,17 @@ REQUIREMENTS:
 - Do NOT include the price in the description
 - Format as: "1. [description]\\n\\n2. [description]\\n\\n3. [description]"
 
-FAIR HOUSING COMPLIANCE (REQUIRED):
+${agentVoice ? `AGENT VOICE & STYLE (IMPORTANT):
+This agent has provided examples of their personal writing style. Study the vocabulary, sentence rhythm, personality, and tone in these examples carefully. Your output must feel like it was written by the same person — not generic AI copy.
+
+Agent's style examples:
+---
+${agentVoice}
+---
+
+Match their voice closely while still following all other requirements below.
+
+` : ""}FAIR HOUSING COMPLIANCE (REQUIRED):
 You must comply with the Fair Housing Act. Never use language that indicates preference, limitation, or discrimination based on race, color, religion, sex, national origin, disability, or familial status. Specifically avoid:
 - References to religious institutions ("near church/mosque/synagogue/temple")
 - Language targeting household composition ("adults only", "perfect for couples", "bachelor pad", "empty nesters")
@@ -203,5 +215,5 @@ You must comply with the Fair Housing Act. Never use language that indicates pre
 
   const compliance = checkFairHousingCompliance(output);
 
-  return NextResponse.json({ output, compliance }, { headers: rateLimitHeaders });
+  return NextResponse.json({ output, compliance, voiceApplied: !!agentVoice }, { headers: rateLimitHeaders });
 }

@@ -18,6 +18,7 @@ model User {
   stripeSubscriptionId String?
   usageCount           Int       @default(0)
   usageResetAt         DateTime  @default(now())
+  agentVoice           String?
   isAdmin              Boolean   @default(false)
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
