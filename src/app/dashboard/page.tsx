@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Trash2, Copy, Check, Sparkles, Crown, AlertCircle } from "lucide-react";
+import { Trash2, Copy, Check, Sparkles, Crown, AlertCircle, FileText } from "lucide-react";
 import clsx from "clsx";
 
 type Listing = {
@@ -13,7 +13,10 @@ type Listing = {
   beds: number;
   baths: number;
   sqft: number | null;
+  price: number | null;
   propertyType: string;
+  highlights: string;
+  neighborhood: string | null;
   tone: string;
   output: string;
   createdAt: string;
@@ -260,6 +263,25 @@ function DashboardContent() {
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0 ml-4">
                     <CopyButton text={listing.output} />
+                    <Link
+                      href={`/generate?${new URLSearchParams({
+                        address: listing.address,
+                        beds: String(listing.beds),
+                        baths: String(listing.baths),
+                        sqft: listing.sqft ? String(listing.sqft) : "",
+                        price: listing.price ? String(listing.price) : "",
+                        propertyType: listing.propertyType,
+                        highlights: listing.highlights,
+                        neighborhood: listing.neighborhood ?? "",
+                        tone: listing.tone,
+                      }).toString()}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg bg-navy-700 text-navy-200 hover:bg-navy-600 transition-all"
+                      title="Use as template"
+                    >
+                      <FileText className="w-3 h-3" />
+                      Reuse
+                    </Link>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();

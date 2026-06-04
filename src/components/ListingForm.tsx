@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Loader2, Sparkles } from "lucide-react";
 import clsx from "clsx";
+import type { ComplianceResult } from "@/lib/fairHousing";
 
 type FormData = {
   address: string;
@@ -17,7 +18,8 @@ type FormData = {
 };
 
 type Props = {
-  onResult: (output: string, formData: FormData) => void;
+  initialValues?: Partial<FormData>;
+  onResult: (output: string, compliance: ComplianceResult | undefined, formData: FormData) => void;
   onLimitReached: () => void;
 };
 
@@ -53,8 +55,8 @@ const inputClass =
 
 const labelClass = "block text-sm font-semibold text-navy-100 mb-1";
 
-export default function ListingForm({ onResult, onLimitReached }: Props) {
-  const [form, setForm] = useState<FormData>(INITIAL);
+export default function ListingForm({ initialValues, onResult, onLimitReached }: Props) {
+  const [form, setForm] = useState<FormData>({ ...INITIAL, ...initialValues });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -84,7 +86,7 @@ export default function ListingForm({ onResult, onLimitReached }: Props) {
         return;
       }
 
-      onResult(data.output, form);
+      onResult(data.output, data.compliance, form);
     } catch {
       setError("Network error. Please check your connection.");
     } finally {

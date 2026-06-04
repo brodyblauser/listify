@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { PLANS } from "@/lib/stripe";
 import { checkRateLimit } from "@/lib/rateLimit";
+import { checkFairHousingCompliance } from "@/lib/fairHousing";
 
 const isDev = !process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY === "your_anthropic_api_key_here";
 const client = isDev ? null : new Anthropic();
@@ -154,7 +155,15 @@ REQUIREMENTS:
 - End with a call to action
 - Do NOT include the address in the description
 - Do NOT include the price in the description
-- Format as: "1. [description]\\n\\n2. [description]\\n\\n3. [description]"`;
+- Format as: "1. [description]\\n\\n2. [description]\\n\\n3. [description]"
+
+FAIR HOUSING COMPLIANCE (REQUIRED):
+You must comply with the Fair Housing Act. Never use language that indicates preference, limitation, or discrimination based on race, color, religion, sex, national origin, disability, or familial status. Specifically avoid:
+- References to religious institutions ("near church/mosque/synagogue/temple")
+- Language targeting household composition ("adults only", "perfect for couples", "bachelor pad", "empty nesters")
+- Age-based targeting ("young professionals", "retirees") unless property is HOPA-certified
+- Any language suggesting racial, ethnic, or national origin identity for the neighborhood
+- Descriptions implying physical ability requirements`;
 
   let output: string;
   if (isDev || !client) {
@@ -192,5 +201,7 @@ REQUIREMENTS:
     ]);
   }
 
-  return NextResponse.json({ output }, { headers: rateLimitHeaders });
+  const compliance = checkFairHousingCompliance(output);
+
+  return NextResponse.json({ output, compliance }, { headers: rateLimitHeaders });
 }

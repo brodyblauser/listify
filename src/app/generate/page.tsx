@@ -1,29 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import ListingForm from "@/components/ListingForm";
 import OutputDisplay from "@/components/OutputDisplay";
 import { Lock, Sparkles } from "lucide-react";
+import type { ComplianceResult } from "@/lib/fairHousing";
 
 type FormData = {
   address: string; beds: string; baths: string; sqft: string; price: string;
   propertyType: string; highlights: string; neighborhood: string; tone: string;
 };
 
-export default function GeneratePage() {
+function GenerateContent() {
   const { data: session } = useSession();
+  const searchParams = useSearchParams();
   const [output, setOutput] = useState<string | null>(null);
+  const [compliance, setCompliance] = useState<ComplianceResult | undefined>();
   const [savedForm, setSavedForm] = useState<FormData | null>(null);
   const [showUpgrade, setShowUpgrade] = useState(false);
 
-  const handleResult = (result: string, formData: FormData) => {
+  const initialValues: Partial<FormData> = {
+    address: searchParams.get("address") ?? undefined,
+    beds: searchParams.get("beds") ?? undefined,
+    baths: searchParams.get("baths") ?? undefined,
+    sqft: searchParams.get("sqft") ?? undefined,
+    price: searchParams.get("price") ?? undefined,
+    propertyType: searchParams.get("propertyType") ?? undefined,
+    highlights: searchParams.get("highlights") ?? undefined,
+    neighborhood: searchParams.get("neighborhood") ?? undefined,
+    tone: searchParams.get("tone") ?? undefined,
+  };
+
+  const hasInitial = Object.values(initialValues).some(Boolean);
+
+  const handleResult = (result: string, comp: ComplianceResult | undefined, formData: FormData) => {
     setOutput(result);
+    setCompliance(comp);
     setSavedForm(formData);
   };
 
-  const handleReset = () => { setOutput(null); setSavedForm(null); };
+  const handleReset = () => { setOutput(null); setCompliance(undefined); setSavedForm(null); };
 
   if (showUpgrade) {
     return (
@@ -61,8 +80,12 @@ export default function GeneratePage() {
             <Sparkles className="w-3.5 h-3.5 text-brown-500" />
             AI Listing Generator
           </div>
-          <h1 className="text-3xl font-bold text-white">Generate Listing Descriptions</h1>
-          <p className="text-navy-400 mt-2">Fill in the property details and let AI do the writing</p>
+          <h1 className="text-3xl font-bold text-white">
+            {hasInitial ? "Edit & Regenerate" : "Generate Listing Descriptions"}
+          </h1>
+          <p className="text-navy-400 mt-2">
+            {hasInitial ? "Pre-filled from your saved listing — adjust and generate" : "Fill in the property details and let AI do the writing"}
+          </p>
           {!session && (
             <p className="text-sm text-brown-700 bg-brown-50 border border-brown-200 rounded-lg px-4 py-2 mt-4 inline-block">
               You have <strong>3 free generations</strong> per month.{" "}
@@ -73,9 +96,13 @@ export default function GeneratePage() {
 
         <div className="bg-navy-800 rounded-2xl shadow-sm border border-navy-700 p-6 sm:p-8">
           {output ? (
-            <OutputDisplay output={output} onReset={handleReset} />
+            <OutputDisplay output={output} compliance={compliance} onReset={handleReset} />
           ) : (
-            <ListingForm onResult={handleResult} onLimitReached={() => setShowUpgrade(true)} />
+            <ListingForm
+              initialValues={initialValues}
+              onResult={handleResult}
+              onLimitReached={() => setShowUpgrade(true)}
+            />
           )}
         </div>
 
@@ -89,5 +116,17 @@ export default function GeneratePage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function GeneratePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-brown-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    }>
+      <GenerateContent />
+    </Suspense>
   );
 }
