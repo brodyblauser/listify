@@ -73,10 +73,12 @@ export default function RootLayout({
                   © {new Date().getFullYear()} Listify — Built for real estate professionals.
                 </span>
               </div>
-              <div className="flex gap-6 text-sm text-navy-400">
+              <div className="flex flex-wrap gap-6 text-sm text-navy-400">
                 <a href="/pricing" className="hover:text-navy-200 transition-colors">Pricing</a>
                 <a href="/generate" className="hover:text-navy-200 transition-colors">Try for Free</a>
                 <a href="/auth/signup" className="hover:text-navy-200 transition-colors">Sign Up</a>
+                <a href="/terms" className="hover:text-navy-200 transition-colors">Terms</a>
+                <a href="/privacy" className="hover:text-navy-200 transition-colors">Privacy</a>
               </div>
             </div>
           </footer>
