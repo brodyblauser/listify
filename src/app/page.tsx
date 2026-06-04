@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { Sparkles, Clock, Copy, TrendingUp, ArrowRight, MapPin, Bed, Bath, Maximize2, Star } from "lucide-react";
+import { Sparkles, Clock, Copy, TrendingUp, ArrowRight, MapPin, Bed, Bath, Maximize2, Star, ShieldCheck } from "lucide-react";
 
 const serif = { fontFamily: "var(--font-playfair, 'Playfair Display', Georgia, serif)" };
 
@@ -57,6 +57,7 @@ const STATS = [
 
 const FEATURES = [
   { icon: Sparkles, title: "AI-Powered Copy", desc: "Claude AI writes professional, compelling descriptions tailored to your property's unique features and your target buyer." },
+  { icon: ShieldCheck, title: "Fair Housing Compliant", desc: "Every description is automatically scanned for Fair Housing Act violations before you see it. Flagged phrases come with plain-English fixes — so you never accidentally put your license at risk." },
   { icon: Clock, title: "Save Hours Every Week", desc: "What takes 30–60 minutes now takes 30 seconds. Run more listings, show more properties, close more deals." },
   { icon: Copy, title: "3 Variations Instantly", desc: "Get three distinct descriptions in different styles. Mix, match, or pick your favorite — ready to paste into MLS." },
   { icon: TrendingUp, title: "More Qualified Showings", desc: "Better copy attracts more of the right buyers. Professional descriptions stand out and convert on the MLS." },
@@ -289,12 +290,16 @@ export default function LandingPage() {
               </motion.div>
 
               <motion.div
-                className="mt-8 flex flex-wrap gap-x-6 gap-y-2"
+                className="mt-8 flex flex-wrap gap-3"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7, delay: 0.5 }}
               >
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border border-green-700/40 text-green-300" style={{ background: "rgba(34,197,94,0.08)" }}>
+                  <ShieldCheck className="w-3.5 h-3.5 text-green-400" />
+                  Fair Housing Compliant
+                </span>
                 {["500+ agents", "4.9 ★ rating", "All MLS formats"].map((item) => (
-                  <span key={item} className="flex items-center gap-1.5 text-sm text-navy-400">
-                    <span style={{ color: "#B89858" }}>·</span> {item}
+                  <span key={item} className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-white/[0.08] text-navy-400" style={{ background: "rgba(255,255,255,0.03)" }}>
+                    {item}
                   </span>
                 ))}
               </motion.div>
